@@ -1,0 +1,25 @@
+
+.container {
+}
+.content {
+    max-width: 1080px;
+    margin: 0 auto;
+}
+.game-board{
+    margin-top: 50px;
+}
+.line-1,.line-2,.line-3 {
+    display: flex;
+    justify-content: center;
+
+}
+
+.cell {
+    border:1px solid black;
+    width: 200px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 50px;
+}
