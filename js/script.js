@@ -8,9 +8,6 @@ const game = (() => {
         ${_board[2]}`)
     }
 
-    function showBoardArray() {
-        console.log(_board);
-    }
 
     function checkWinner(side) {
         //If first line equal
@@ -78,7 +75,7 @@ function player(name, side) {
         game.receiveTurn(line, cell, side, name)
     }
 
-    return {getName, getSide, makeTurn}
+    return {getName, makeTurn}
 }
 
 const player1 = player('Andrew', 'X');
