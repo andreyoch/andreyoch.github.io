@@ -33,7 +33,7 @@ const game = (() => {
         } else if (_board[0][0] === side && _board[1][1] === side && _board[2][2] === side) {
             game.showWinner(side);
             //If equal from bottom to top
-        } else if (_board[0][2] === side && _board[1][1] === side && _board[2][1] === side) {
+        } else if (_board[0][2] === side && _board[1][1] === side && _board[2][0] === side) {
             game.showWinner(side)
         }
     }
