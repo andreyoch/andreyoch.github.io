@@ -5,6 +5,10 @@ const game = (() => {
         return _board;
     }
 
+    function setBoard(boardArray) {
+        _board = boardArray;
+    }
+
 
     function checkWinner(side) {
         //If first line equal
@@ -53,7 +57,7 @@ const game = (() => {
     }
 
 
-    return {getBoard, receiveTurn, checkWinner, showWinner,};
+    return {getBoard, receiveTurn, checkWinner, showWinner,setBoard};
 
 
 })()
@@ -81,28 +85,28 @@ const player2 = player('Computer', 'O')
 document.addEventListener('DOMContentLoaded',main);
 
 function main (){
-    // showCell();
-    showBoard()
+    makeTurn();
 }
 
-// function showCell() {
-//     const cells = document.querySelectorAll('.cell');
-//     cells.forEach(cell => cell.addEventListener('click',(e) => {
-//         const lineNumber = cell.parentElement.classList[1];
-//         const cellNumber = cell.classList[1]
-//         console.log(lineNumber);
-//         console.log(cellNumber);
-//         cell.textContent = 'O';
-//     }));
-//
-// }
-function showBoard() {
+function makeTurn() {
+    const cells = document.querySelectorAll('.cell');
+    cells.forEach(cell => cell.addEventListener('click',(e) => {
+        const lineNumber = parseInt(cell.parentElement.classList[1]) - 1;
+        const cellNumber = parseInt(cell.classList[1]) - 1;
+        const board = game.getBoard();
+        board[lineNumber][cellNumber] = 'X';
+        game.setBoard(board);
+        renderBoard();
+    }));
+
+}
+function renderBoard() {
     const board = game.getBoard();
     const cells = document.querySelectorAll('.cell');
     cells.forEach(cell => {
-        let lineNumber = parseInt(cell.parentElement.classList[1]);
-        const cellNumber = parseInt(cell.classList[1]);
-        cell.textContent = board[lineNumber - 1][cellNumber - 1];
+        let lineNumber = parseInt(cell.parentElement.classList[1]) - 1;
+        const cellNumber = parseInt(cell.classList[1]) - 1;
+        cell.textContent = board[lineNumber][cellNumber];
     })
 }
 
