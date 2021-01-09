@@ -81,6 +81,7 @@ html {
 }
 /* Styles for Single player name enter screen */
 .single-player-name-enter {
+    /*display: none;*/
     margin-top: 200px;
 }
 .single-player_form {
@@ -137,6 +138,8 @@ html {
     }
 
 }
+/* Styles for pick a side screen */
+
 .game-board {
     display: none;
     margin-top: 50px;
