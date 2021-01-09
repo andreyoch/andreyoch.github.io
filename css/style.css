@@ -10,8 +10,9 @@ html {
     max-width: 1080px;
     margin: 0 auto;
 }
-
+/* Styles for welcome screen */
 .welcome-screen {
+    display: none;
     margin-top: 119px;
 }
 
@@ -76,6 +77,43 @@ html {
         font-size: 30px;
     }
 
+
+}
+/* Styles for Single player name enter screen */
+.single-player {
+    margin-top: 200px;
+}
+.single-player_form {
+    text-align: center;
+}
+.name-input {
+    width: 492px;
+    height: 130px;
+    border-radius: 30px;
+    background-color: #ffffff;
+    border: none;
+    outline: 0;
+    color: #5f5f5f;
+    font-family: Poppins,sans-serif;
+    font-size: 49px;
+    font-weight: 400;
+    text-align: center;
+    margin-top: 62px;
+}
+
+.next-btn {
+    width: 359px;
+    height: 132px;
+    border-radius: 50px;
+    background-color: var(--main-color);
+    border:none;
+    outline: 0;
+    color: #ffffff;
+    font-family: Poppins,sans-serif;
+    font-size: 63px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-top: 162px;
 }
 .game-board {
     display: none;
