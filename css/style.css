@@ -6,6 +6,7 @@
     margin: 0 auto;
 }
 .game-board{
+    display: none;
     margin-top: 50px;
 }
 .line {
