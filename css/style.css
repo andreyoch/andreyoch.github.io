@@ -80,7 +80,7 @@ html {
 
 }
 /* Styles for Single player name enter screen */
-.single-player {
+.single-player-name-enter {
     margin-top: 200px;
 }
 .single-player_form {
@@ -119,7 +119,7 @@ html {
 }
 /* Media queries for Single player name enter screen  */
 @media (max-width: 687px) {
-    .single-player {
+    .single-player-name-enter {
         margin-top: 100px;
     }
 }
