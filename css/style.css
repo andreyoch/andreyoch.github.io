@@ -12,7 +12,7 @@ html {
 }
 
 .welcome-screen {
-    margin: 119px;
+    margin-top: 119px;
 }
 
 .welcome-screen_header {
@@ -22,7 +22,6 @@ html {
     font-weight: 700;
     text-align: center;
 }
-
 .welcome-screen_button-row {
     margin-top: 174px;
     display: flex;
@@ -48,7 +47,36 @@ html {
 .button-row_button:hover {
     border: 6px solid var(--main-color);
 }
+/*Media queries for welcome screen */
 
+@media(max-width: 513px) {
+    .welcome-screen_header {
+        font-size: 60px;
+}
+    .button-row_button {
+        font-size: 40px;
+    }
+}
+@media(max-width: 413px) {
+    .welcome-screen_header {
+        font-size: 50px;
+    }
+    .button-row_button {
+        width: 300px;
+        font-size: 35px;
+    }
+}
+
+@media(max-width: 337px) {
+    .welcome-screen_header {
+        font-size: 40px;
+    }
+    .button-row_button {
+        width: 250px;
+        font-size: 30px;
+    }
+
+}
 .game-board {
     display: none;
     margin-top: 50px;
