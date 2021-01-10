@@ -128,6 +128,24 @@ function listenToTypeOfGame () {
 function singlePlayer() {
     const enterNameScreen = document.querySelector('.single-player-name_enter');
     enterNameScreen.style = 'display: block';
+    const singlePlayerNextBtn = document.querySelector('.single-player_next-btn');
+    singlePlayerNextBtn.addEventListener('click',(e) => {
+        const playerName = document.querySelector('.name-input').value;
+        enterNameScreen.style = 'display: none';
+        const pickASideScreen = document.querySelector('.pick-a-side');
+        pickASideScreen.style = 'display: block';
+        const playBtn = document.querySelector('.pick-a-side_btn');
+        playBtn.addEventListener('click',e => {
+            let side;
+            //If cross selected return true,if ellipse return false
+            const selectedSide = document.querySelector('.buttons-row_button').checked;
+            if(selectedSide) {
+                side = 'X';
+            } else {
+                side = 'O';
+            }
+        })
+    })
 }
 
 function multiPlayer() {
