@@ -242,16 +242,6 @@ html {
     align-items: center;
     font-size: 50px;
 }
-
-
-#cell-1 {
-    background: url("../images/cross.png") no-repeat center;
-}
-
-#cell-3 {
-    background: url("../images/ellipse.png") no-repeat center;
-}
-
 #cell-0, #cell-1, #cell-3, #cell-4, #cell-6, #cell-7 {
     border-right: 10px solid var(--main-color);
 }
@@ -283,5 +273,21 @@ html {
     font-weight: 700;
     text-align: center;
     text-transform: uppercase;
+}
+
+/* Media queries for game board screen*/
+@media(max-width: 432px) {
+    .cell {
+        background-size: 80px;
+    }
+}
+
+@media(max-width: 320px) {
+    .game-board_whose-turn {
+        font-size: 60px;
+    }
+    .cell {
+        background-size: 70px;
+    }
 }
 
