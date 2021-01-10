@@ -86,6 +86,7 @@ document.addEventListener('DOMContentLoaded',main);
 
 function main (){
     makeTurn();
+    listenToTypeOfGame()
 }
 
 function makeTurn() {
@@ -110,5 +111,25 @@ function renderBoard() {
     })
 }
 
+function listenToTypeOfGame () {
+    const gameTypeBtns  = document.querySelectorAll('.button-row_button');
+    gameTypeBtns.forEach(btn => btn.addEventListener('click',(e) => {
+        if(btn.textContent === 'Single Player') {
+            singlePlayer();
+        } else {
+            multiPlayer();
+        }
+        const welcomeScreen = document.querySelector('.welcome-screen');
+        welcomeScreen.style = 'display: none';
+    }))
 
+}
 
+function singlePlayer() {
+    const enterNameScreen = document.querySelector('.single-player-name_enter');
+    enterNameScreen.style = 'display: block';
+}
+
+function multiPlayer() {
+
+}
