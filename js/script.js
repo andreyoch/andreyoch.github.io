@@ -96,19 +96,14 @@ function playRound(side,name) {
         const board = game.getBoard();
         board[lineNumber][cellNumber] = side;
         game.setBoard(board);
-          renderCell(lineNumber,cellNumber);
+        const cellHtml = document.querySelector(`#cell-${lineNumber}${cellNumber}`);
+        if(side === 'X') {
+            cellHtml.style = 'background: url("../images/cross.png") no-repeat center';
+        } else {
+            cellHtml.style = 'background: url("../images/ellipse.png") no-repeat center';
+        }
     }));
 
-}
-function renderCell(lineNumber,cellNumber) {
-    const board = game.getBoard();
-    const value = board[lineNumber][cellNumber];
-    const cell = document.querySelector(`#cell-${lineNumber}${cellNumber}`);
-    if(value === 'X') {
-        cell.style = 'background: url("../images/cross.png") no-repeat center'
-    } else {
-        cell.style = 'background: url("../images/ellipse.png") no-repeat center';
-    }
 }
 
 function listenToTypeOfGame () {
