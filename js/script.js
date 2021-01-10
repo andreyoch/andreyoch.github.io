@@ -14,27 +14,35 @@ const game = (() => {
         //If first line equal
         if (_board[0][0] === side && _board[0][1] === side && _board[0][2] === side) {
             game.showWinner(side);
+            return true;
             //If first column equal
         } else if (_board[0][0] === side && _board[1][0] === side && _board[2][0] === side) {
             game.showWinner(side);
+            return true;
             //If second column equal
         } else if (_board[0][1] === side && _board[1][1] === side && _board[2][1] === side) {
             game.showWinner(side);
+            return true;
             //If third column equal
         } else if (_board[0][2] === side && _board[1][2] === side && _board[2][2] === side) {
             game.showWinner(side)
+            return true;
             //If second line equal
         } else if (_board[1][0] === side && _board[1][1] === side && _board[1][2] === side) {
             game.showWinner(side);
+            return true;
             //If third line equal
         } else if (_board[2][0] === side && _board[2][1] === side && _board[2][2] === side) {
             game.showWinner(side);
+            return true;
             //If equal from top to bottom
         } else if (_board[0][0] === side && _board[1][1] === side && _board[2][2] === side) {
             game.showWinner(side);
+            return true;
             //If equal from bottom to top
         } else if (_board[0][2] === side && _board[1][1] === side && _board[2][0] === side) {
-            game.showWinner(side)
+            game.showWinner(side);
+            return true;
         }
     }
 
@@ -88,22 +96,28 @@ function main (){
     listenToTypeOfGame()
 }
 
-function playRound(side,name) {
+function playRound(userSide,name) {
+    let playerScore = 0;
+    let computerScore = 0;
     const cells = document.querySelectorAll('.cell');
     cells.forEach(cell => cell.addEventListener('click',(e) => {
         const lineNumber = parseInt(cell.parentElement.classList[1]) - 1;
         const cellNumber = parseInt(cell.classList[1]) - 1;
         const board = game.getBoard();
-        board[lineNumber][cellNumber] = side;
+        board[lineNumber][cellNumber] = userSide;
         game.setBoard(board);
-        const cellHtml = document.querySelector(`#cell-${lineNumber}${cellNumber}`);
-        if(side === 'X') {
-            cellHtml.style = 'background: url("../images/cross.png") no-repeat center';
+        const userSelectedCell = document.querySelector(`#cell-${lineNumber}${cellNumber}`);
+        if(userSide === 'X') {
+            userSelectedCell.style = 'background: url("../images/cross.png") no-repeat center';
         } else {
-            cellHtml.style = 'background: url("../images/ellipse.png") no-repeat center';
+            userSelectedCell.style = 'background: url("../images/ellipse.png") no-repeat center';
+        }
+        if(game.checkWinner(userSide)) {
+
+        } else {
+            computerTurn(userSide);
         }
     }));
-
 }
 
 function listenToTypeOfGame () {
@@ -149,5 +163,39 @@ function singlePlayer() {
 
 function multiPlayer() {
 
+}
+
+function computerTurn (userSide) {
+    const board = game.getBoard();
+    let lineNumber;
+    let cellNumber;
+    let condition = true;
+    let computerSide;
+    while(condition) {
+        //Generate a random number for line and cell,and check,if cell not empty-repeat
+         lineNumber = Math.floor((Math.random() * (3)));
+         cellNumber = Math.floor((Math.random() * (3)));
+         if(!board[lineNumber][cellNumber]){
+             //Update value in array
+             if(userSide === 'X') {
+                 computerSide = '0'
+                 board[lineNumber][cellNumber] = computerSide;
+             } else {
+                 computerSide = 'X';
+                 board[lineNumber][cellNumber] = computerSide;
+             }
+            condition = false;
+             game.setBoard(board);
+         }
+    }
+
+    const computerSelectedCell = document.querySelector(`#cell-${lineNumber}${cellNumber}`);
+    if(userSide === 'X') {
+        computerSelectedCell.style = 'background: url("../images/ellipse.png") no-repeat center';
+
+    } else {
+        computerSelectedCell.style = 'background: url("../images/cross.png") no-repeat center';
+    }
+    game.checkWinner(computerSide);
 }
 
