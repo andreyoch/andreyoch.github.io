@@ -80,8 +80,8 @@ html {
 
 }
 /* Styles for Single player name enter screen */
-.single-player-name-enter {
-    /*display: none;*/
+.single-player-name_enter {
+    display: none;
     margin-top: 200px;
 }
 .single-player_form {
@@ -102,7 +102,7 @@ html {
     margin-top: 62px;
 }
 
-.next-btn {
+.next-btn,.main-btn {
     width: 359px;
     height: 132px;
     border-radius: 50px;
@@ -120,7 +120,7 @@ html {
 }
 /* Media queries for Single player name enter screen  */
 @media (max-width: 687px) {
-    .single-player-name-enter {
+    .single-player-name_enter {
         margin-top: 100px;
     }
 }
@@ -139,7 +139,35 @@ html {
 
 }
 /* Styles for pick a side screen */
+.single-player_pick-a-side-header {
+    margin-top: 160px;
+}
+.single-player_pick-a-side_images-row {
+    display: flex;
+    justify-content: center;
+    margin-top: 132px;
+}
+.single-player_img {
+    margin: 0 50px;
+}
 
+.buttons-row {
+    display: flex;
+    justify-content: center;
+    margin-top: 37px;
+}
+.buttons-row_button {
+    width: 80px;
+    height: 80px;
+    background-color: #efefef;
+    margin: 0 50px;
+}
+.pick-a-side_btn-container {
+    text-align: center;
+}
+.pick-a-side_btn {
+    margin-top: 72px;
+}
 .game-board {
     display: none;
     margin-top: 50px;

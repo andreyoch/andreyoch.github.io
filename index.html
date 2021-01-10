@@ -36,15 +36,36 @@
             </div>
         </div>
         <div class="single-player">
-            <div class="single-player-name-enter">
-            <div class="single-player_header header">Enter Your Name</div>
-            <form class="single-player_form" action="#">
-                <div class="single-player_name-input_row">
-                    <input class ="name-input" type="text">
-                </div>
-                <button class="single-player_next-btn next-btn">Next</button>
-            </form>
+            <div class="single-player-name_enter">
+                <div class="single-player_header header">Enter Your Name</div>
+                <form class="single-player_form" action="#">
+                    <div class="single-player_name-input_row">
+                        <input class="name-input" type="text">
+                    </div>
+                    <button class="single-player_next-btn next-btn main-btn">Next</button>
+                </form>
+            </div>
         </div>
+        <div class="single-player_pick-a-side pick-a-side">
+            <div class="single-player_pick-a-side-header header"> Pick A Side</div>
+            <div class="single-player_pick-a-side_sides">
+                <div class="single-player_pick-a-side_images-row">
+                    <div class="single-player_pick-a-side_img-container">
+                        <label for="cross"><img src="images/cross.png" alt="cross" class="single-player_img"></label>
+                    </div>
+                    <div class="single-player_pick-a-side_img-container">
+                        <label for="ellipse"><img src="images/ellipse.png" alt="ellipse" class="single-player_img"></label>
+                    </div>
+                </div>
+                <div class="single-player_pick-a-side_buttons_row buttons-row">
+                    <input id="cross" type="radio" name="side" class="buttons-row_button" value="cross" checked>
+                    <input id="ellipse" type="radio" name="side" class="buttons-row_button" value="ellipse">
+                </div>
+            </div>
+
+        </div>
+        <div class="pick-a-side_btn-container">
+        <button class="pick-a-side_btn main-btn">Play</button>
         </div>
     </div>
 </div>
