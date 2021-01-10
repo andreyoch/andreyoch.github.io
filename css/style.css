@@ -292,6 +292,9 @@ display: none;
 }
 
 /* Styles for game win screen */
+.game-win {
+    display: none;
+}
 .game-win_header {
     margin-top: 360px;
 }

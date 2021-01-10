@@ -28,26 +28,26 @@
                     <button class="single-player_next-btn next-btn main-btn">Next</button>
                 </form>
             </div>
-        </div>
-        <div class="single-player_pick-a-side pick-a-side">
-            <div class="single-player_pick-a-side-header header"> Pick A Side</div>
-            <div class="single-player_pick-a-side_sides">
-                <div class="single-player_pick-a-side_images-row">
-                    <div class="single-player_pick-a-side_img-container">
-                        <label for="cross"><img src="images/cross.png" alt="cross" class="single-player_img"></label>
+            <div class="single-player_pick-a-side pick-a-side">
+                <div class="single-player_pick-a-side-header header"> Pick A Side</div>
+                <div class="single-player_pick-a-side_sides">
+                    <div class="single-player_pick-a-side_images-row">
+                        <div class="single-player_pick-a-side_img-container">
+                            <label for="cross"><img src="images/cross.png" alt="cross" class="single-player_img"></label>
+                        </div>
+                        <div class="single-player_pick-a-side_img-container">
+                            <label for="ellipse"><img src="images/ellipse.png" alt="ellipse"
+                                                      class="single-player_img"></label>
+                        </div>
                     </div>
-                    <div class="single-player_pick-a-side_img-container">
-                        <label for="ellipse"><img src="images/ellipse.png" alt="ellipse"
-                                                  class="single-player_img"></label>
+                    <div class="single-player_pick-a-side_buttons_row buttons-row">
+                        <input id="cross" type="radio" name="side" class="buttons-row_button" value="cross" checked>
+                        <input id="ellipse" type="radio" name="side" class="buttons-row_button" value="ellipse">
                     </div>
                 </div>
-                <div class="single-player_pick-a-side_buttons_row buttons-row">
-                    <input id="cross" type="radio" name="side" class="buttons-row_button" value="cross" checked>
-                    <input id="ellipse" type="radio" name="side" class="buttons-row_button" value="ellipse">
+                <div class="pick-a-side_btn-container">
+                    <button class="pick-a-side_btn main-btn">Play</button>
                 </div>
-            </div>
-            <div class="pick-a-side_btn-container">
-                <button class="pick-a-side_btn main-btn">Play</button>
             </div>
         </div>
         <div class="game-board">
@@ -74,12 +74,13 @@
         </div>
         <div class="game-win">
             <div class="game-win_header header">Player win the game!</div>
+            <div class="game-win_btn-container">
+                <button id="new-game-btn" class="game-win_new-game-btn main-btn">New game</button>
+            </div>
         </div>
-        <div class="game-win_btn-container">
-            <button id="new-game-btn" class="game-win_new-game-btn main-btn">New game</button>
-        </div>
+
     </div>
 </div>
-<!--<script src="js/script.js"></script>-->
+<script src="js/script.js"></script>
 </body>
 </html>
