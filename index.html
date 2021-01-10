@@ -11,23 +11,6 @@
 <body>
 <div class="container">
     <div class="content">
-        <div class="game-board">
-            <div class="line 1">
-                <div class="cell 1"></div>
-                <div class="cell 2"></div>
-                <div class="cell 3"></div>
-            </div>
-            <div class="line 2">
-                <div class="cell 1"></div>
-                <div class="cell 2"></div>
-                <div class="cell 3"></div>
-            </div>
-            <div class="line 3">
-                <div class="cell 1"></div>
-                <div class="cell 2"></div>
-                <div class="cell 3"></div>
-            </div>
-        </div>
         <div class="welcome-screen">
             <header class="welcome-screen_header header">Tic-Tac-Toe</header>
             <div class="welcome-screen_button-row">
@@ -54,7 +37,8 @@
                         <label for="cross"><img src="images/cross.png" alt="cross" class="single-player_img"></label>
                     </div>
                     <div class="single-player_pick-a-side_img-container">
-                        <label for="ellipse"><img src="images/ellipse.png" alt="ellipse" class="single-player_img"></label>
+                        <label for="ellipse"><img src="images/ellipse.png" alt="ellipse"
+                                                  class="single-player_img"></label>
                     </div>
                 </div>
                 <div class="single-player_pick-a-side_buttons_row buttons-row">
@@ -66,8 +50,30 @@
                 <button class="pick-a-side_btn main-btn">Play</button>
             </div>
         </div>
+        <div class="game-board">
+            <div class="game-board_header header">Player 0 - Computer 0</div>
+            <div id="line-1" class="line 1">
+                <div id="cell-0" class="cell 1"></div>
+                <div id="cell-1" class="cell 2"></div>
+                <div id="cell-2" class="cell 3"></div>
+            </div>
+            <div id="line-2" class="line 2">
+                <div id="cell-3" class="cell 1"></div>
+                <div id="cell-4" class="cell 2"></div>
+                <div id="cell-5" class="cell 3"></div>
+            </div>
+            <div id="line-3" class="line 3">
+                <div id="cell-6" class="cell 1"></div>
+                <div id="cell-7" class="cell 2"></div>
+                <div id="cell-8" class="cell 3"></div>
+            </div>
+            <div class="game-board_whose-turn">Player turn!</div>
+            <div class="next-round-btn_container">
+            <button id="next-round-btn" class="main-btn">Next round</button>
+            </div>
+        </div>
     </div>
 </div>
-<script src="js/script.js"></script>
+<!--<script src="js/script.js"></script>-->
 </body>
 </html>

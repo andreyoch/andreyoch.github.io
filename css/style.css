@@ -10,6 +10,7 @@ html {
     max-width: 1080px;
     margin: 0 auto;
 }
+
 /* Styles for welcome screen */
 .welcome-screen {
     display: none;
@@ -23,6 +24,7 @@ html {
     font-weight: 700;
     text-align: center;
 }
+
 .welcome-screen_button-row {
     margin-top: 174px;
     display: flex;
@@ -48,30 +50,35 @@ html {
 .button-row_button:hover {
     border: 6px solid var(--main-color);
 }
+
 /*Media queries for welcome screen */
 
-@media(max-width: 513px) {
+@media (max-width: 513px) {
     .header {
         font-size: 60px;
-}
+    }
+
     .button-row_button {
         font-size: 40px;
     }
 }
-@media(max-width: 413px) {
+
+@media (max-width: 413px) {
     .header {
         font-size: 50px;
     }
+
     .button-row_button {
         width: 300px;
         font-size: 35px;
     }
 }
 
-@media(max-width: 337px) {
+@media (max-width: 337px) {
     .header {
         font-size: 40px;
     }
+
     .button-row_button {
         width: 250px;
         font-size: 30px;
@@ -79,14 +86,17 @@ html {
 
 
 }
+
 /* Styles for Single player name enter screen */
 .single-player-name_enter {
     display: none;
     margin-top: 200px;
 }
+
 .single-player_form {
     text-align: center;
 }
+
 .name-input {
     width: 492px;
     height: 130px;
@@ -95,61 +105,70 @@ html {
     border: none;
     outline: 0;
     color: #5f5f5f;
-    font-family: Poppins,sans-serif;
+    font-family: Poppins, sans-serif;
     font-size: 49px;
     font-weight: 400;
     text-align: center;
     margin-top: 62px;
 }
 
-.next-btn,.main-btn {
+.next-btn, .main-btn {
     width: 359px;
     height: 132px;
     border-radius: 50px;
     background-color: var(--main-color);
-    border:none;
+    border: none;
     outline: 0;
     color: #ffffff;
-    font-family: Poppins,sans-serif;
+    font-family: Poppins, sans-serif;
     font-size: 63px;
     font-weight: 700;
     text-transform: uppercase;
 }
+
 .single-player_next-btn {
     margin-top: 120px;
 }
+
 /* Media queries for Single player name enter screen  */
 @media (max-width: 687px) {
     .single-player-name_enter {
         margin-top: 100px;
     }
 }
-@media(max-width: 514px) {
+
+@media (max-width: 514px) {
     .name-input {
         width: 400px;
     }
 }
-@media(max-width: 425px) {
+
+@media (max-width: 425px) {
     .name-input {
         width: 90vw;
     }
+
     .single-player_next-btn {
         width: 90vw;
     }
 
 }
+
 /* Styles for pick a side screen */
 .pick-a-side {
     display: none;
 }
+
 .single-player_pick-a-side-header {
     margin-top: 160px;
 }
+
 .single-player_pick-a-side_images-row {
     display: flex;
     justify-content: center;
     margin-top: 132px;
 }
+
 .single-player_img {
     margin: 0 50px;
 }
@@ -159,18 +178,22 @@ html {
     justify-content: center;
     margin-top: 37px;
 }
+
 .buttons-row_button {
     width: 80px;
     height: 80px;
     background-color: #efefef;
     margin: 0 50px;
 }
+
 .pick-a-side_btn-container {
     text-align: center;
 }
+
 .pick-a-side_btn {
     margin-top: 72px;
 }
+
 /* Media queries for pick a side screen */
 @media (max-width: 433px) {
     .main-btn {
@@ -178,23 +201,31 @@ html {
         font-size: 50px;
         height: 100px;
     }
+
     .single-player_img {
         width: 70px;
         height: 70px;
     }
+
     .buttons-row_button {
         width: 50px;
         height: 50px;
     }
 }
+
 @media (max-width: 340px) {
-    .buttons-row_button,.single-player_img {
+    .buttons-row_button, .single-player_img {
         margin: 0 30px;
     }
 }
+
+/* Styles for game board screen */
+.game-board_header {
+    margin: 87px 0 30px 0;
+}
+
 .game-board {
-    display: none;
-    margin-top: 50px;
+
 }
 
 .line {
@@ -204,7 +235,6 @@ html {
 }
 
 .cell {
-    border: 1px solid black;
     width: 200px;
     height: 200px;
     display: flex;
@@ -212,3 +242,46 @@ html {
     align-items: center;
     font-size: 50px;
 }
+
+
+#cell-1 {
+    background: url("../images/cross.png") no-repeat center;
+}
+
+#cell-3 {
+    background: url("../images/ellipse.png") no-repeat center;
+}
+
+#cell-0, #cell-1, #cell-3, #cell-4, #cell-6, #cell-7 {
+    border-right: 10px solid var(--main-color);
+}
+
+#cell-0,#cell-1,#cell-2,#cell-3,#cell-4,#cell-5 {
+    border-bottom:10px solid var(--main-color) ;
+}
+
+.game-board_whose-turn {
+    color: var(--main-color);
+    font-family: Poppins,sans-serif;
+    font-size: 70px;
+    font-weight: 700;
+    text-align: center;
+    text-transform: uppercase;
+    margin-top: 10px;
+}
+
+.next-round-btn_container {
+    text-align: center;
+}
+
+#next-round-btn {
+    width: 236px;
+    height: 56px;
+    color: #ffffff;
+    font-family: Poppins,sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    text-align: center;
+    text-transform: uppercase;
+}
+
