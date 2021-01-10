@@ -302,3 +302,10 @@ display: none;
     margin-top: 64px;
     font-size: 60px;
 }
+/* Media queries for game win screen */
+@media(max-width: 433px) {
+    #new-game-btn {
+        width: 250px;
+        font-size: 40px;
+    }
+}
