@@ -139,6 +139,9 @@ html {
 
 }
 /* Styles for pick a side screen */
+.pick-a-side {
+    display: none;
+}
 .single-player_pick-a-side-header {
     margin-top: 160px;
 }
