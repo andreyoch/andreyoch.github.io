@@ -168,6 +168,27 @@ html {
 .pick-a-side_btn {
     margin-top: 72px;
 }
+/* Media queries for pick a side screen */
+@media (max-width: 433px) {
+    .main-btn {
+        width: 200px;
+        font-size: 50px;
+        height: 100px;
+    }
+    .single-player_img {
+        width: 70px;
+        height: 70px;
+    }
+    .buttons-row_button {
+        width: 50px;
+        height: 50px;
+    }
+}
+@media (max-width: 340px) {
+    .buttons-row_button,.single-player_img {
+        margin: 0 30px;
+    }
+}
 .game-board {
     display: none;
     margin-top: 50px;
