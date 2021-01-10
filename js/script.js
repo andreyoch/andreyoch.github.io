@@ -85,19 +85,20 @@ const player2 = player('Computer', 'O')
 document.addEventListener('DOMContentLoaded',main);
 
 function main (){
-    makeTurn();
     listenToTypeOfGame()
 }
 
-function makeTurn() {
+function playRound(side,name) {
     const cells = document.querySelectorAll('.cell');
     cells.forEach(cell => cell.addEventListener('click',(e) => {
         const lineNumber = parseInt(cell.parentElement.classList[1]) - 1;
         const cellNumber = parseInt(cell.classList[1]) - 1;
         const board = game.getBoard();
-        board[lineNumber][cellNumber] = 'X';
+        board[lineNumber][cellNumber] = side;
         game.setBoard(board);
-        renderBoard();
+        console.log(cell);
+         // renderBoard();
+        console.log(lineNumber,cellNumber)
     }));
 
 }
@@ -108,6 +109,7 @@ function renderBoard() {
         let lineNumber = parseInt(cell.parentElement.classList[1]) - 1;
         const cellNumber = parseInt(cell.classList[1]) - 1;
         cell.textContent = board[lineNumber][cellNumber];
+        console.log(cell)
     })
 }
 
@@ -144,6 +146,10 @@ function singlePlayer() {
             } else {
                 side = 'O';
             }
+            pickASideScreen.style = 'display: none';
+            const gameBoard = document.querySelector('.game-board');
+            gameBoard.style = 'display: block';
+            playRound(side,playerName);
         })
     })
 }
@@ -151,3 +157,4 @@ function singlePlayer() {
 function multiPlayer() {
 
 }
+

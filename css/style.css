@@ -242,11 +242,11 @@ display: none;
     align-items: center;
     font-size: 50px;
 }
-#cell-0, #cell-1, #cell-3, #cell-4, #cell-6, #cell-7 {
+#cell-00,#cell-01,#cell-10,#cell-11,#cell-20,#cell-21 {
     border-right: 10px solid var(--main-color);
 }
 
-#cell-0,#cell-1,#cell-2,#cell-3,#cell-4,#cell-5 {
+#cell-00,#cell-01,#cell-02,#cell-10,#cell-11,#cell-12{
     border-bottom:10px solid var(--main-color) ;
 }
 
