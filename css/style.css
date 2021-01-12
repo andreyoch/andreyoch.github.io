@@ -250,7 +250,7 @@ display: none;
     border-bottom:10px solid var(--main-color) ;
 }
 
-.game-board_whose-turn {
+.game-board_whose-won-round {
     color: var(--main-color);
     font-family: Poppins,sans-serif;
     font-size: 70px;
@@ -262,6 +262,7 @@ display: none;
 
 .next-round-btn_container {
     text-align: center;
+    display: none;
 }
 
 #next-round-btn {

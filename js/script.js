@@ -97,9 +97,11 @@ function main (){
 }
 
 function playRound(userSide,name) {
+
     let playerScore = 0;
     let computerScore = 0;
     const cells = document.querySelectorAll('.cell');
+    cells.forEach(cell => cell.style = 'background : ;');
     cells.forEach(cell => cell.addEventListener('click',(e) => {
         const lineNumber = parseInt(cell.parentElement.classList[1]) - 1;
         const cellNumber = parseInt(cell.classList[1]) - 1;
@@ -113,7 +115,7 @@ function playRound(userSide,name) {
             userSelectedCell.style = 'background: url("../images/ellipse.png") no-repeat center';
         }
         if(game.checkWinner(userSide)) {
-
+        endRound(name);
         } else {
             computerTurn(userSide);
         }
@@ -196,6 +198,23 @@ function computerTurn (userSide) {
     } else {
         computerSelectedCell.style = 'background: url("../images/cross.png") no-repeat center';
     }
-    game.checkWinner(computerSide);
+    if(game.checkWinner(computerSide)){
+        endRound();
+    }
+
+}
+
+function endRound(winner) {
+    const cells = document.querySelectorAll('.cell');
+    cells.forEach(cell => cell.removeEventListener('click'));
+    const nextRoundBtn = document.querySelector('.next-round-btn_container');
+    const winnerText = document.querySelector('.game-board_whose-won-round');
+    nextRoundBtn.style = 'display: block';
+    winnerText.textContent = `${winner} win the round!`
+
+    nextRoundBtn.addEventListener('click',(e) => {
+        winnerText.textContent = '';
+        playRound();
+    });
 }
 
