@@ -70,24 +70,36 @@ const game = (() => {
 
 })()
 
-function player(name, side) {
-    function getName() {
-        return name;
-    }
+function player() {
+    let _name;
+    let _side;
 
     function getSide() {
-        return side;
+        return _side;
     }
+    function setSide(side) {
+        _side = side;
+    }
+    function getName() {
+        return _name;
+    }
+    function setName(name) {
+        _name = name;
+    }
+
+
+
+
 
     function makeTurn(line, cell) {
         game.receiveTurn(line, cell, side, name)
     }
 
-    return {getName, makeTurn}
+    return {getName, makeTurn,getSide,setName,setSide}
 }
 
-const player1 = player('Andrew', 'X');
-const player2 = player('Computer', 'O')
+const player1 = player();
+const player2 = player();
 
 
 document.addEventListener('DOMContentLoaded',main);
@@ -206,7 +218,6 @@ function computerTurn (userSide) {
 
 function endRound(winner) {
     const cells = document.querySelectorAll('.cell');
-    cells.forEach(cell => cell.removeEventListener('click'));
     const nextRoundBtn = document.querySelector('.next-round-btn_container');
     const winnerText = document.querySelector('.game-board_whose-won-round');
     nextRoundBtn.style = 'display: block';
