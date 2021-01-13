@@ -203,7 +203,7 @@ function endRound(winner) {
     cells.forEach(cell => cell.removeEventListener('click', game.makeTurn));
     nextRoundBtn.addEventListener('click', () => {
         winnerText.textContent = '';
-        // playRound();
+        playRound();
     });
     game.clearBoardArray();
 
