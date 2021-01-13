@@ -10,7 +10,7 @@ const game = (() => {
     }
     function clearBoardArray() {
         const _clearBoardArray = _board.map(array1 => array1.map(value => value = ''));
-        console.log(_clearBoardArray);
+        setBoard(_clearBoardArray);
     }
 
 
