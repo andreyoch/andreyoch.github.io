@@ -67,9 +67,31 @@ const game = (() => {
         game.checkWinner(side);
         console.log(`${playerNameWhoMadeTurn} made turn`)
     }
+    const makeTurn = function listenToTurn(cell){
+        return function (e) {
+            console.log(cell);
+            const userSide = player1.getSide();
+            const name = player1.getName();
+            const lineNumber = parseInt(cell.parentElement.classList[1]) - 1;
+            const cellNumber = parseInt(cell.classList[1]) - 1;
+            const board = game.getBoard();
+            board[lineNumber][cellNumber] = userSide;
+            game.setBoard(board);
+            const userSelectedCell = document.querySelector(`#cell-${lineNumber}${cellNumber}`);
+            if(userSide === 'X') {
+                userSelectedCell.style = 'background: url("../images/cross.png") no-repeat center';
+            } else {
+                userSelectedCell.style = 'background: url("../images/ellipse.png") no-repeat center';
+            }
+            if(game.checkWinner(userSide)) {
+                endRound(name);
+            } else {
+                computerTurn(userSide);
+            }
+        }
 
-
-    return {getBoard, receiveTurn, checkWinner, showWinner,setBoard,clearBoardArray};
+    }
+    return {getBoard, receiveTurn, checkWinner, showWinner,setBoard,clearBoardArray,makeTurn};
 
 
 })()
@@ -90,9 +112,6 @@ function player() {
     function setName(name) {
         _name = name;
     }
-
-
-
 
 
     function makeTurn(line, cell) {
@@ -118,24 +137,7 @@ function playRound(userSide,name) {
     let computerScore = 0;
     const cells = document.querySelectorAll('.cell');
     cells.forEach(cell => cell.style = 'background : ;');
-    cells.forEach(cell => cell.addEventListener('click',(e) => {
-        const lineNumber = parseInt(cell.parentElement.classList[1]) - 1;
-        const cellNumber = parseInt(cell.classList[1]) - 1;
-        const board = game.getBoard();
-        board[lineNumber][cellNumber] = userSide;
-        game.setBoard(board);
-        const userSelectedCell = document.querySelector(`#cell-${lineNumber}${cellNumber}`);
-        if(userSide === 'X') {
-            userSelectedCell.style = 'background: url("../images/cross.png") no-repeat center';
-        } else {
-            userSelectedCell.style = 'background: url("../images/ellipse.png") no-repeat center';
-        }
-        if(game.checkWinner(userSide)) {
-        endRound(name);
-        } else {
-            computerTurn(userSide);
-        }
-    }));
+    cells.forEach(cell => cell.addEventListener('click',game.makeTurn(cell)),{once:true});
 }
 
 function listenToTypeOfGame () {
@@ -228,11 +230,12 @@ function endRound(winner) {
     const winnerText = document.querySelector('.game-board_whose-won-round');
     nextRoundBtn.style = 'display: block';
     winnerText.textContent = `${winner} win the round!`
-
+    cells.forEach(cell => cell.removeEventListener('click',game.makeTurn));
     nextRoundBtn.addEventListener('click',(e) => {
         winnerText.textContent = '';
-        playRound();
+        // playRound();
     });
     game.clearBoardArray();
+
 }
 
