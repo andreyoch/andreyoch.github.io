@@ -8,6 +8,10 @@ const game = (() => {
     function setBoard(boardArray) {
         _board = boardArray;
     }
+    function clearBoardArray() {
+        const _clearBoardArray = _board.map(array1 => array1.map(value => value = ''));
+        console.log(_clearBoardArray);
+    }
 
 
     function checkWinner(side) {
@@ -65,7 +69,7 @@ const game = (() => {
     }
 
 
-    return {getBoard, receiveTurn, checkWinner, showWinner,setBoard};
+    return {getBoard, receiveTurn, checkWinner, showWinner,setBoard,clearBoardArray};
 
 
 })()
@@ -170,6 +174,8 @@ function singlePlayer() {
             pickASideScreen.style = 'display: none';
             const gameBoard = document.querySelector('.game-board');
             gameBoard.style = 'display: block';
+            player1.setName(playerName);
+            player1.setSide(side);
             playRound(side,playerName);
         })
     })
@@ -227,5 +233,6 @@ function endRound(winner) {
         winnerText.textContent = '';
         playRound();
     });
+    game.clearBoardArray();
 }
 
