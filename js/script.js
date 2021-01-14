@@ -286,5 +286,20 @@ function showPickASideScreenM () {
     const pickASideScreen = document.querySelector('.pick-a-side');
     pickASideScreen.style = 'display: block';
     const pickASideHeader = document.querySelector('.single-player_pick-a-side-header');
-    pickASideHeader.textContent = `${player1.getName()} pick a side`
+    pickASideHeader.textContent = `${player1.getName()} pick a side`;
+    const playBtn = document.querySelector('.pick-a-side_btn');
+    playBtn.addEventListener('click',() => {
+        let side;
+        //If cross selected return true,if ellipse return false
+        const selectedSide = document.querySelector('.buttons-row_button').checked;
+        if (selectedSide) {
+            side = 'X';
+        } else {
+            side = 'O';
+        }
+        pickASideScreen.style = 'display: none';
+        const gameBoard = document.querySelector('.game-board');
+        gameBoard.style = 'display: block';
+    },{once:true});
+
 }
