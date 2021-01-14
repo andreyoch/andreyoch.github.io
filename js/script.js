@@ -1,6 +1,7 @@
 const game = (() => {
     let _board = [['', '', ''], ['', '', ''], ['', '', '']];
     let _round = 0;
+
     function getBoard() {
         return _board;
     }
@@ -8,9 +9,11 @@ const game = (() => {
     function setBoard(boardArray) {
         _board = boardArray;
     }
+
     function getRoundNumber() {
         return _round;
     }
+
     function updateRoundNumber() {
         _round++;
     }
@@ -59,7 +62,7 @@ const game = (() => {
         board[lineNumber][cellNumber] = userSide;
         game.setBoard(board);
         const userSelectedCell = document.querySelector(`#cell-${lineNumber}${cellNumber}`);
-        cell.removeEventListener('click',game.makeTurn);
+        cell.removeEventListener('click', game.makeTurn);
         if (userSide === 'X') {
             userSelectedCell.style = 'background: url("../images/cross.png") no-repeat center';
         } else {
@@ -73,7 +76,7 @@ const game = (() => {
         }
     }
 
-    return {getBoard, checkWinner, setBoard, clearBoardArray, makeTurn,getRoundNumber,updateRoundNumber};
+    return {getBoard, checkWinner, setBoard, clearBoardArray, makeTurn, getRoundNumber, updateRoundNumber};
 
 
 })()
@@ -107,7 +110,7 @@ function player() {
         _score++;
     }
 
-    return {getName, getSide, setName, setSide,getScore,updateScore}
+    return {getName, getSide, setName, setSide, getScore, updateScore}
 }
 
 const player1 = player();
@@ -171,7 +174,26 @@ function singlePlayer() {
 }
 
 function multiPlayer() {
-
+    const enterNameScreen = document.querySelector('.single-player-name_enter');
+    enterNameScreen.style = 'display: block';
+    const nameEnterHeader = document.querySelector('.single-player_header');
+    nameEnterHeader.textContent = 'Enter name for Player 1';
+    const nameSubmitBtn = document.querySelector('.single-player_next-btn');
+    const nameInput = document.querySelector('.name-input');
+    nameInput.value = 'Player 1';
+    //Wait for player1 name enter btn click,after that change nameInput placeholder and wait for player2 name enter btn click
+    nameSubmitBtn.addEventListener('click', () => {
+        const player1Name = nameInput.value;
+        player1.setName(player1Name);
+        nameEnterHeader.textContent = 'Enter name for Player 2';
+        nameInput.value = 'Player 2';
+        nameSubmitBtn.addEventListener('click', () => {
+            const player2Name = nameInput.value;
+            player2.setName(player2Name);
+            enterNameScreen.style = 'display: none';
+            showPickASideScreenM();
+        }, {once: true})
+    }, {once: true});
 }
 
 function computerTurn(userSide) {
@@ -199,7 +221,7 @@ function computerTurn(userSide) {
     }
 
     const computerSelectedCell = document.querySelector(`#cell-${lineNumber}${cellNumber}`);
-    computerSelectedCell.removeEventListener('click',game.makeTurn);
+    computerSelectedCell.removeEventListener('click', game.makeTurn);
     if (userSide === 'X') {
         computerSelectedCell.style = 'background: url("../images/ellipse.png") no-repeat center';
 
@@ -226,13 +248,13 @@ function endRound(winner) {
         cells.forEach(cell => cell.removeEventListener('click', game.makeTurn));
         nextRoundBtn.style = 'display: none';
         winnerText.textContent = '';
-        if(game.getRoundNumber() < 5) {
+        if (game.getRoundNumber() < 5) {
             console.log(game.getRoundNumber())
             playRound();
         } else {
             endGame(winner);
         }
-    },{once: true});
+    }, {once: true});
 }
 
 function updateGameResult() {
@@ -245,17 +267,24 @@ function updateGameResult() {
 }
 
 function endGame(winner) {
-     const gameBoardScreen = document.querySelector('.game-board');
-     const gameWinScreen = document.querySelector('.game-win');
-     const winnerTitle = document.querySelector('.game-win_header');
-     const newGameBtn = document.querySelector('.game-win_new-game-btn');
-     const welcomeScreen = document.querySelector('.welcome-screen');
-     gameBoardScreen.style = 'display: none';
-     gameWinScreen.style = 'display: block';
-     winnerTitle.textContent = `${winner} win game!`;
-     newGameBtn.addEventListener('click',() => {
-         gameWinScreen.style = 'display: none';
-         welcomeScreen.style = 'display" block';
-         listenToTypeOfGame()
-     },{once:true});
+    const gameBoardScreen = document.querySelector('.game-board');
+    const gameWinScreen = document.querySelector('.game-win');
+    const winnerTitle = document.querySelector('.game-win_header');
+    const newGameBtn = document.querySelector('.game-win_new-game-btn');
+    const welcomeScreen = document.querySelector('.welcome-screen');
+    gameBoardScreen.style = 'display: none';
+    gameWinScreen.style = 'display: block';
+    winnerTitle.textContent = `${winner} win game!`;
+    newGameBtn.addEventListener('click', () => {
+        gameWinScreen.style = 'display: none';
+        welcomeScreen.style = 'display" block';
+        listenToTypeOfGame()
+    }, {once: true});
+}
+
+function showPickASideScreenM () {
+    const pickASideScreen = document.querySelector('.pick-a-side');
+    pickASideScreen.style = 'display: block';
+    const pickASideHeader = document.querySelector('.single-player_pick-a-side-header');
+    pickASideHeader.textContent = `${player1.getName()} pick a side`
 }
