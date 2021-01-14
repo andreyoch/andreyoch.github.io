@@ -199,6 +199,7 @@ function computerTurn(userSide) {
     }
 
     const computerSelectedCell = document.querySelector(`#cell-${lineNumber}${cellNumber}`);
+    computerSelectedCell.removeEventListener('click',game.makeTurn);
     if (userSide === 'X') {
         computerSelectedCell.style = 'background: url("../images/ellipse.png") no-repeat center';
 
