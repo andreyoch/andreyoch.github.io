@@ -53,6 +53,7 @@ const game = (() => {
         board[lineNumber][cellNumber] = userSide;
         game.setBoard(board);
         const userSelectedCell = document.querySelector(`#cell-${lineNumber}${cellNumber}`);
+        cell.removeEventListener('click',game.makeTurn);
         if (userSide === 'X') {
             userSelectedCell.style = 'background: url("../images/cross.png") no-repeat center';
         } else {
@@ -115,7 +116,7 @@ function main() {
 function playRound() {
     const cells = document.querySelectorAll('.cell');
     cells.forEach(cell => cell.style = 'background : ;');
-    cells.forEach(cell => cell.addEventListener('click', game.makeTurn), {once: true});
+    cells.forEach(cell => cell.addEventListener('click', game.makeTurn));
 }
 
 function listenToTypeOfGame() {
