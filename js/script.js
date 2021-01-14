@@ -1,12 +1,18 @@
 const game = (() => {
     let _board = [['', '', ''], ['', '', ''], ['', '', '']];
-
+    let _round = 0;
     function getBoard() {
         return _board;
     }
 
     function setBoard(boardArray) {
         _board = boardArray;
+    }
+    function getRoundNumber() {
+        return _round;
+    }
+    function updateRoundNumber() {
+        _round++;
     }
 
     function clearBoardArray() {
@@ -67,7 +73,7 @@ const game = (() => {
         }
     }
 
-    return {getBoard, checkWinner, setBoard, clearBoardArray, makeTurn};
+    return {getBoard, checkWinner, setBoard, clearBoardArray, makeTurn,getRoundNumber,updateRoundNumber};
 
 
 })()
@@ -159,6 +165,7 @@ function singlePlayer() {
             player1.setName(playerName);
             player1.setSide(side);
             playRound(side, playerName);
+            updateGameResult()
         })
     })
 }
@@ -213,12 +220,18 @@ function endRound(winner) {
     winnerText.textContent = `${winner} win the round!`
     game.clearBoardArray();
     updateGameResult();
+    game.updateRoundNumber();
     nextRoundBtn.addEventListener('click', () => {
         cells.forEach(cell => cell.removeEventListener('click', game.makeTurn));
         nextRoundBtn.style = 'display: none';
         winnerText.textContent = '';
-        playRound();
-    });
+        if(game.getRoundNumber() < 5) {
+            console.log(game.getRoundNumber())
+            playRound();
+        } else {
+            endGame(winner);
+        }
+    },{once: true});
 }
 
 function updateGameResult() {
@@ -230,3 +243,18 @@ function updateGameResult() {
     gameResult.textContent = `${player1Name} ${player1Score} - ${player2Name} ${player2Score}`;
 }
 
+function endGame(winner) {
+     const gameBoardScreen = document.querySelector('.game-board');
+     const gameWinScreen = document.querySelector('.game-win');
+     const winnerTitle = document.querySelector('.game-win_header');
+     const newGameBtn = document.querySelector('.game-win_new-game-btn');
+     const welcomeScreen = document.querySelector('.welcome-screen');
+     gameBoardScreen.style = 'display: none';
+     gameWinScreen.style = 'display: block';
+     winnerTitle.textContent = `${winner} win game!`;
+     newGameBtn.addEventListener('click',() => {
+         gameWinScreen.style = 'display: none';
+         welcomeScreen.style = 'display" block';
+         listenToTypeOfGame()
+     },{once:true});
+}
