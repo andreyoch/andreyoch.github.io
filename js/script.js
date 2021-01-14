@@ -42,32 +42,29 @@ const game = (() => {
             return true;
         }
     }
-
-    const makeTurn = function listenToTurn(cell) {
-        return function () {
-            console.log(cell);
-            const userSide = player1.getSide();
-            const name = player1.getName();
-            const lineNumber = parseInt(cell.parentElement.classList[1]) - 1;
-            const cellNumber = parseInt(cell.classList[1]) - 1;
-            const board = game.getBoard();
-            board[lineNumber][cellNumber] = userSide;
-            game.setBoard(board);
-            const userSelectedCell = document.querySelector(`#cell-${lineNumber}${cellNumber}`);
-            if (userSide === 'X') {
-                userSelectedCell.style = 'background: url("../images/cross.png") no-repeat center';
-            } else {
-                userSelectedCell.style = 'background: url("../images/ellipse.png") no-repeat center';
-            }
-            if (game.checkWinner(userSide)) {
-                endRound(name);
-            } else {
-                computerTurn(userSide);
-            }
+    function makeTurn(e) {
+        const cell = e.target; // return a cell on which user click (html element)
+        const userSide = player1.getSide();
+        const name = player1.getName();
+        const lineNumber = parseInt(cell.parentElement.classList[1]) - 1;
+        const cellNumber = parseInt(cell.classList[1]) - 1;
+        const board = game.getBoard();
+        board[lineNumber][cellNumber] = userSide;
+        game.setBoard(board);
+        const userSelectedCell = document.querySelector(`#cell-${lineNumber}${cellNumber}`);
+        if (userSide === 'X') {
+            userSelectedCell.style = 'background: url("../images/cross.png") no-repeat center';
+        } else {
+            userSelectedCell.style = 'background: url("../images/ellipse.png") no-repeat center';
         }
-
+        if (game.checkWinner(userSide)) {
+            endRound(name);
+        } else {
+            computerTurn(userSide);
+        }
     }
-    return {getBoard, checkWinner, setBoard, clearBoardArray, makeTurn};
+
+    return {getBoard, checkWinner, setBoard, clearBoardArray,makeTurn};
 
 
 })()
@@ -97,7 +94,6 @@ function player() {
 
 const player1 = player();
 
-
 document.addEventListener('DOMContentLoaded', main);
 
 function main() {
@@ -107,7 +103,7 @@ function main() {
 function playRound() {
     const cells = document.querySelectorAll('.cell');
     cells.forEach(cell => cell.style = 'background : ;');
-    cells.forEach(cell => cell.addEventListener('click', game.makeTurn(cell)), {once: true});
+    cells.forEach(cell => cell.addEventListener('click', game.makeTurn), {once: true});
 }
 
 function listenToTypeOfGame() {
@@ -200,8 +196,9 @@ function endRound(winner) {
     const winnerText = document.querySelector('.game-board_whose-won-round');
     nextRoundBtn.style = 'display: block';
     winnerText.textContent = `${winner} win the round!`
-    cells.forEach(cell => cell.removeEventListener('click', game.makeTurn));
     nextRoundBtn.addEventListener('click', () => {
+        cells.forEach(cell => cell.removeEventListener('click', game.makeTurn));
+        nextRoundBtn.style = 'display: none';
         winnerText.textContent = '';
         playRound();
     });
