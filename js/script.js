@@ -300,6 +300,16 @@ function showPickASideScreenM () {
         pickASideScreen.style = 'display: none';
         const gameBoard = document.querySelector('.game-board');
         gameBoard.style = 'display: block';
+        playRoundM();
     },{once:true});
+
+}
+function playRoundM() {
+    const cells = document.querySelectorAll('.cell');
+    cells.forEach(cell => cell.style = 'background : ;');
+    cells.forEach(cell => cell.addEventListener('click', makeTurnM))
+}
+
+function makeTurnM() {
 
 }
