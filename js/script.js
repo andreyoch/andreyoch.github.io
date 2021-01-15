@@ -318,10 +318,13 @@ function makeTurnM(e) {
     const cell = e.target; //
     let userSide;
     let name;
+    let whoTurn;
     if(whoseTurn() === 'playerOne') {
+        whoTurn = player1;
         userSide = player1.getSide();
         name = player1.getName();
     }  else {
+        whoTurn = player2;
         userSide = player2.getSide();
         name = player2.getName()
     }
@@ -339,8 +342,14 @@ function makeTurnM(e) {
         userSelectedCell.style = 'background: url("../images/ellipse.png") no-repeat center';
     }
     if (game.checkWinner(userSide)) {
-        player1.updateScore();
-        endRound(name);
+        if(whoTurn === player1) {
+            player1.updateScore();
+            endRoundM(name);
+        }
+        else {
+            player2.updateScore();
+            endRoundM(name);
+        }
     } else {
 
     }
@@ -358,3 +367,24 @@ function whoseTurn() {
     }
 }
 
+function endRoundM(winner) {
+    const cells = document.querySelectorAll('.cell');
+    const nextRoundBtn = document.querySelector('.next-round-btn_container');
+    const winnerText = document.querySelector('.game-board_whose-won-round');
+    nextRoundBtn.style = 'display: block';
+    winnerText.textContent = `${winner} win the round!`
+    game.clearBoardArray();
+    updateGameResult();
+    game.updateRoundNumber();
+    cells.forEach(cell => cell.removeEventListener('click', game.makeTurn));
+    nextRoundBtn.addEventListener('click', () => {
+        nextRoundBtn.style = 'display: none';
+        winnerText.textContent = '';
+        if (game.getRoundNumber() < 5) {
+            console.log(game.getRoundNumber())
+            playRoundM();
+        } else {
+            endGame(winner);
+        }
+    }, {once: true});
+}
