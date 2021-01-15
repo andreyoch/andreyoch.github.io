@@ -13,6 +13,9 @@ const game = (() => {
     function getRoundNumber() {
         return _round;
     }
+    function setRoundNumber(numberOfRounds) {
+        _round = numberOfRounds;
+    }
 
     function updateRoundNumber() {
         _round++;
@@ -76,7 +79,7 @@ const game = (() => {
         }
     }
 
-    return {getBoard, checkWinner, setBoard, clearBoardArray, makeTurn, getRoundNumber, updateRoundNumber};
+    return {getBoard, checkWinner, setBoard, clearBoardArray, makeTurn, getRoundNumber, updateRoundNumber,setRoundNumber};
 
 
 })()
@@ -109,8 +112,11 @@ function player() {
     function updateScore() {
         _score++;
     }
+    function setScore(score) {
+        _score = score;
+    }
 
-    return {getName, getSide, setName, setSide, getScore, updateScore}
+    return {getName, getSide, setName, setSide, getScore, updateScore,setScore}
 }
 
 const player1 = player();
@@ -123,6 +129,7 @@ function main() {
 }
 
 function playRound() {
+    updateGameResult();
     const cells = document.querySelectorAll('.cell');
     cells.forEach(cell => cell.style = 'background : ;');
     cells.forEach(cell => cell.addEventListener('click', game.makeTurn));
@@ -273,7 +280,10 @@ function endGame() {
     } else {
         winner = player2.getName();
     }
-     const gameBoardScreen = document.querySelector('.game-board');
+    player1.setScore(0);
+    player2.setScore(0);
+    game.setRoundNumber(0);
+    const gameBoardScreen = document.querySelector('.game-board');
     const gameWinScreen = document.querySelector('.game-win');
     const winnerTitle = document.querySelector('.game-win_header');
     const newGameBtn = document.querySelector('.game-win_new-game-btn');
