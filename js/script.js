@@ -325,7 +325,8 @@ function makeTurnM(e) {
         userSide = player2.getSide();
         name = player2.getName()
     }
-     const lineNumber = parseInt(cell.parentElement.classList[1]) - 1;
+    cell.removeEventListener('click',makeTurnM);
+    const lineNumber = parseInt(cell.parentElement.classList[1]) - 1;
     const cellNumber = parseInt(cell.classList[1]) - 1;
     const board = game.getBoard();
     board[lineNumber][cellNumber] = userSide;
