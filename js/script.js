@@ -292,6 +292,7 @@ function endGame() {
     gameWinScreen.style = 'display: block';
     winnerTitle.textContent = `${winner} win game!`;
     newGameBtn.addEventListener('click', () => {
+        document.location.reload()
         gameWinScreen.style = 'display: none';
         welcomeScreen.style = 'display" block';
         listenToTypeOfGame()
