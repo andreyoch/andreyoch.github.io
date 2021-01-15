@@ -139,7 +139,7 @@ function listenToTypeOfGame() {
         }
         const welcomeScreen = document.querySelector('.welcome-screen');
         welcomeScreen.style = 'display: none';
-    }))
+    },{once:true}))
 
 }
 
@@ -169,7 +169,7 @@ function singlePlayer() {
             player1.setSide(side);
             playRound(side, playerName);
             updateGameResult()
-        })
+        },{once:true})
     })
 }
 
