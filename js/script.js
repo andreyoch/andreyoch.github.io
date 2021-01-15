@@ -244,8 +244,8 @@ function endRound(winner) {
     game.clearBoardArray();
     updateGameResult();
     game.updateRoundNumber();
+    cells.forEach(cell => cell.removeEventListener('click', game.makeTurn));
     nextRoundBtn.addEventListener('click', () => {
-        cells.forEach(cell => cell.removeEventListener('click', game.makeTurn));
         nextRoundBtn.style = 'display: none';
         winnerText.textContent = '';
         if (game.getRoundNumber() < 5) {
@@ -293,9 +293,11 @@ function showPickASideScreenM () {
         //If cross selected return true,if ellipse return false
         const selectedSide = document.querySelector('.buttons-row_button').checked;
         if (selectedSide) {
-            side = 'X';
+            player1.setSide('X');
+            player2.setSide('O');
         } else {
-            side = 'O';
+            player1.setSide('O');
+            player2.setSide('X');
         }
         pickASideScreen.style = 'display: none';
         const gameBoard = document.querySelector('.game-board');
@@ -305,11 +307,53 @@ function showPickASideScreenM () {
 
 }
 function playRoundM() {
+    const whoseTurn = document.querySelector('.game-board_whose-turn');
+    whoseTurn.textContent = `${player1.getName()} turn`;
     const cells = document.querySelectorAll('.cell');
     cells.forEach(cell => cell.style = 'background : ;');
     cells.forEach(cell => cell.addEventListener('click', makeTurnM))
 }
 
-function makeTurnM() {
+function makeTurnM(e) {
+    const cell = e.target; //
+    let userSide;
+    let name;
+    if(whoseTurn() === 'playerOne') {
+        userSide = player1.getSide();
+        name = player1.getName();
+    }  else {
+        userSide = player2.getSide();
+        name = player2.getName()
+    }
+     const lineNumber = parseInt(cell.parentElement.classList[1]) - 1;
+    const cellNumber = parseInt(cell.classList[1]) - 1;
+    const board = game.getBoard();
+    board[lineNumber][cellNumber] = userSide;
+    game.setBoard(board);
+    const userSelectedCell = document.querySelector(`#cell-${lineNumber}${cellNumber}`);
+    cell.removeEventListener('click', game.makeTurn);
+    if (userSide === 'X') {
+        userSelectedCell.style = 'background: url("../images/cross.png") no-repeat center';
+    } else {
+        userSelectedCell.style = 'background: url("../images/ellipse.png") no-repeat center';
+    }
+    if (game.checkWinner(userSide)) {
+        player1.updateScore();
+        endRound(name);
+    } else {
 
+    }
 }
+
+function whoseTurn() {
+    const whoseTurnTitle = document.querySelector('.game-board_whose-turn');
+    const whoseTurn = whoseTurnTitle.textContent;
+    if(whoseTurn.includes(`${player1.getName()}`)) {
+        whoseTurnTitle.textContent = `${player2.getName()} turn`
+        return 'playerOne';
+    } else {
+        whoseTurnTitle.textContent = `${player1.getName()} turn`
+        return  'playerTwo';
+    }
+}
+
