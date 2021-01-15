@@ -307,6 +307,8 @@ function showPickASideScreenM () {
 
 }
 function playRoundM() {
+   updateGameResult();
+    //Player One turn
     const whoseTurn = document.querySelector('.game-board_whose-turn');
     whoseTurn.textContent = `${player1.getName()} turn`;
     const cells = document.querySelectorAll('.cell');
