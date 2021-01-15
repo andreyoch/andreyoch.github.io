@@ -266,8 +266,14 @@ function updateGameResult() {
     gameResult.textContent = `${player1Name} ${player1Score} - ${player2Name} ${player2Score}`;
 }
 
-function endGame(winner) {
-    const gameBoardScreen = document.querySelector('.game-board');
+function endGame() {
+    let winner;
+    if(player1.getScore() > player2.getScore()) {
+        winner = player1.getName();
+    } else {
+        winner = player2.getName();
+    }
+     const gameBoardScreen = document.querySelector('.game-board');
     const gameWinScreen = document.querySelector('.game-win');
     const winnerTitle = document.querySelector('.game-win_header');
     const newGameBtn = document.querySelector('.game-win_new-game-btn');
@@ -386,7 +392,7 @@ function endRoundM(winner) {
             console.log(game.getRoundNumber())
             playRoundM();
         } else {
-            endGame(winner);
+            endGame();
         }
     }, {once: true});
 }
