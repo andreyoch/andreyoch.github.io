@@ -19,18 +19,6 @@ const game = (() => {
     let _round = 0;
     let _turnNumber = 0;
 
-    function getTurnNumber() {
-        return _turnNumber;
-    }
-
-    function setTurnNumber(turnNumber) {
-        _turnNumber = turnNumber;
-    }
-
-    function updateTurnNumber() {
-        _turnNumber++;
-    }
-
     function checkWinner(side) {
         const boardArray = board.getBoard();
         //If first line equal
@@ -61,7 +49,7 @@ const game = (() => {
     }
 
     function makeTurn(e) {
-        game.updateTurnNumber();
+        _turnNumber++;
         const cell = e.target; // return a cell on which user click (html element)
         const userSide = player1.getSide();
         const name = player1.getName();
@@ -80,14 +68,14 @@ const game = (() => {
         if (checkWinner(userSide)) {
             player1.updateScore();
             endRound(name,'single-player');
-        } else if (game.getTurnNumber() === 9) {
+        } else if (_turnNumber === 9) {
             draw('single-player');
         } else {
             computerTurn(userSide);
         }
     }
     function makeTurnM(e) {
-        game.updateTurnNumber();
+        _turnNumber++;
         const cell = e.target; //
         let userSide;
         let name;
@@ -122,7 +110,7 @@ const game = (() => {
                 player2.updateScore();
                 endRound(name,'multiplayer');
             }
-        } else if (game.getTurnNumber() === 9) {
+        } else if (_turnNumber === 9) {
             game.draw('multiplayer');
         }
     }
@@ -172,7 +160,7 @@ const game = (() => {
         nextRoundBtn.style = 'display: block';
         board.clearBoardArray();
         _round++;
-        game.setTurnNumber(0);
+        _turnNumber = 0;
         if (typeOfGame === 'multiplayer') {
             cells.forEach(cell => cell.removeEventListener('click', makeTurnM));
         } else {
@@ -240,7 +228,7 @@ const game = (() => {
         }, {once: true});
     }
     function computerTurn(userSide) {
-        game.updateTurnNumber();
+        _turnNumber++;
         const boardArray = board.getBoard();
         let lineNumber;
         let cellNumber;
@@ -343,7 +331,7 @@ const game = (() => {
         board.clearBoardArray();
         updateGameResult();
         _round++;
-        game.setTurnNumber(0);
+        _turnNumber = 0;
         nextRoundBtn.addEventListener('click', () => {
             nextRoundBtn.style = 'display: none';
             winnerText.textContent = '';
@@ -364,9 +352,6 @@ const game = (() => {
         }
     }
     return {
-        getTurnNumber,
-        updateTurnNumber,
-        setTurnNumber,
         playRound,
         listenToTypeOfGame,
         draw,
