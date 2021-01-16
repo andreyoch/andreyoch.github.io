@@ -111,6 +111,19 @@ const game = (() => {
         }
 
     }
+    function listenToTypeOfGame() {
+        const gameTypeButtons = document.querySelectorAll('.button-row_button');
+        gameTypeButtons.forEach(btn => btn.addEventListener('click', () => {
+            if (btn.textContent === 'Single Player') {
+                player2.setName('Computer');
+                singlePlayer();
+            } else {
+                multiPlayer();
+            }
+            const welcomeScreen = document.querySelector('.welcome-screen');
+            welcomeScreen.style = 'display: none';
+        }, {once: true}))
+    }
     return {
         checkWinner,
         makeTurn,
@@ -120,7 +133,7 @@ const game = (() => {
         getTurnNumber,
         updateTurnNumber,
         setTurnNumber,
-        playRound
+        playRound,listenToTypeOfGame
     };
 })()
 function player() {
@@ -165,22 +178,10 @@ const player2 = player();
 document.addEventListener('DOMContentLoaded', main);
 
 function main() {
-    listenToTypeOfGame()
+    game.listenToTypeOfGame()
 }
 
-function listenToTypeOfGame() {
-    const gameTypeButtons = document.querySelectorAll('.button-row_button');
-    gameTypeButtons.forEach(btn => btn.addEventListener('click', () => {
-        if (btn.textContent === 'Single Player') {
-            player2.setName('Computer');
-            singlePlayer();
-        } else {
-            multiPlayer();
-        }
-        const welcomeScreen = document.querySelector('.welcome-screen');
-        welcomeScreen.style = 'display: none';
-    }, {once: true}))
-}
+
 
 function singlePlayer() {
     const enterNameScreen = document.querySelector('.single-player-name_enter');
