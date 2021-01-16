@@ -290,6 +290,91 @@ const game = (() => {
         }
 
     }
+    function showPickASideScreenM() {
+        const pickASideScreen = document.querySelector('.pick-a-side');
+        pickASideScreen.style = 'display: block';
+        const pickASideHeader = document.querySelector('.single-player_pick-a-side-header');
+        pickASideHeader.textContent = `${player1.getName()} pick a side`;
+        const playBtn = document.querySelector('.pick-a-side_btn');
+        playBtn.addEventListener('click', () => {
+            //If cross selected return true,if ellipse return false
+            const selectedSide = document.querySelector('.buttons-row_button').checked;
+            if (selectedSide) {
+                player1.setSide('X');
+                player2.setSide('O');
+            } else {
+                player1.setSide('O');
+                player2.setSide('X');
+            }
+            pickASideScreen.style = 'display: none';
+            const gameBoard = document.querySelector('.game-board');
+            gameBoard.style = 'display: block';
+            game.playRound('multiplayer');
+        }, {once: true});
+
+    }
+    function endGame() {
+        let winner;
+        if (player1.getScore() > player2.getScore()) {
+            winner = player1.getName();
+        } else {
+            winner = player2.getName();
+        }
+        player1.setScore(0);
+        player2.setScore(0);
+        game.setRoundNumber(0);
+        const gameBoardScreen = document.querySelector('.game-board');
+        const gameWinScreen = document.querySelector('.game-win');
+        const winnerTitle = document.querySelector('.game-win_header');
+        const newGameBtn = document.querySelector('.game-win_new-game-btn');
+        const welcomeScreen = document.querySelector('.welcome-screen');
+        gameBoardScreen.style = 'display: none';
+        gameWinScreen.style = 'display: block';
+        winnerTitle.textContent = `${winner} win game!`;
+        newGameBtn.addEventListener('click', () => {
+            document.location.reload()
+            gameWinScreen.style = 'display: none';
+            welcomeScreen.style = 'display" block';
+            game.listenToTypeOfGame()
+        }, {once: true});
+    }
+    function updateGameResult() {
+        const gameResult = document.querySelector('.game-board_header');
+        const player1Score = player1.getScore();
+        const player1Name = player1.getName();
+        const player2Score = player2.getScore();
+        const player2Name = player2.getName();
+        gameResult.textContent = `${player1Name} ${player1Score} - ${player2Name} ${player2Score}`;
+    }
+    function endRound(winner,typeOfGame) {
+        const cells = document.querySelectorAll('.cell');
+        const nextRoundBtn = document.querySelector('.next-round-btn_container');
+        const winnerText = document.querySelector('.game-board_whose-won-round');
+        nextRoundBtn.style = 'display: block';
+        winnerText.textContent = `${winner} win the round!`
+        board.clearBoardArray();
+        updateGameResult();
+        game.updateRoundNumber();
+        game.setTurnNumber(0);
+        nextRoundBtn.addEventListener('click', () => {
+            nextRoundBtn.style = 'display: none';
+            winnerText.textContent = '';
+            if (game.getRoundNumber() < 5) {
+                if(typeOfGame === 'multiplayer') {
+                    game.playRound('multiplayer');
+                } else {
+                    game.playRound('single-player')
+                }
+            } else {
+                endGame();
+            }
+        }, {once: true});
+        if(typeOfGame === 'multiplayer') {
+            cells.forEach(cell => cell.removeEventListener('click', game.makeTurnM));
+        } else {
+            cells.forEach(cell => cell.removeEventListener('click', game.makeTurn));
+        }
+    }
     return {
         checkWinner,
         makeTurn,
@@ -351,91 +436,6 @@ function main() {
 }
 
 
-function endRound(winner,typeOfGame) {
-    const cells = document.querySelectorAll('.cell');
-    const nextRoundBtn = document.querySelector('.next-round-btn_container');
-    const winnerText = document.querySelector('.game-board_whose-won-round');
-    nextRoundBtn.style = 'display: block';
-    winnerText.textContent = `${winner} win the round!`
-    board.clearBoardArray();
-    updateGameResult();
-    game.updateRoundNumber();
-    game.setTurnNumber(0);
-    nextRoundBtn.addEventListener('click', () => {
-        nextRoundBtn.style = 'display: none';
-        winnerText.textContent = '';
-        if (game.getRoundNumber() < 5) {
-            if(typeOfGame === 'multiplayer') {
-                game.playRound('multiplayer');
-            } else {
-                game.playRound('single-player')
-            }
-        } else {
-            endGame();
-        }
-    }, {once: true});
-    if(typeOfGame === 'multiplayer') {
-        cells.forEach(cell => cell.removeEventListener('click', game.makeTurnM));
-    } else {
-        cells.forEach(cell => cell.removeEventListener('click', game.makeTurn));
-    }
-}
 
-function updateGameResult() {
-    const gameResult = document.querySelector('.game-board_header');
-    const player1Score = player1.getScore();
-    const player1Name = player1.getName();
-    const player2Score = player2.getScore();
-    const player2Name = player2.getName();
-    gameResult.textContent = `${player1Name} ${player1Score} - ${player2Name} ${player2Score}`;
-}
 
-function endGame() {
-    let winner;
-    if (player1.getScore() > player2.getScore()) {
-        winner = player1.getName();
-    } else {
-        winner = player2.getName();
-    }
-    player1.setScore(0);
-    player2.setScore(0);
-    game.setRoundNumber(0);
-    const gameBoardScreen = document.querySelector('.game-board');
-    const gameWinScreen = document.querySelector('.game-win');
-    const winnerTitle = document.querySelector('.game-win_header');
-    const newGameBtn = document.querySelector('.game-win_new-game-btn');
-    const welcomeScreen = document.querySelector('.welcome-screen');
-    gameBoardScreen.style = 'display: none';
-    gameWinScreen.style = 'display: block';
-    winnerTitle.textContent = `${winner} win game!`;
-    newGameBtn.addEventListener('click', () => {
-        document.location.reload()
-        gameWinScreen.style = 'display: none';
-        welcomeScreen.style = 'display" block';
-        game.listenToTypeOfGame()
-    }, {once: true});
-}
 
-function showPickASideScreenM() {
-    const pickASideScreen = document.querySelector('.pick-a-side');
-    pickASideScreen.style = 'display: block';
-    const pickASideHeader = document.querySelector('.single-player_pick-a-side-header');
-    pickASideHeader.textContent = `${player1.getName()} pick a side`;
-    const playBtn = document.querySelector('.pick-a-side_btn');
-    playBtn.addEventListener('click', () => {
-        //If cross selected return true,if ellipse return false
-        const selectedSide = document.querySelector('.buttons-row_button').checked;
-        if (selectedSide) {
-            player1.setSide('X');
-            player2.setSide('O');
-        } else {
-            player1.setSide('O');
-            player2.setSide('X');
-        }
-        pickASideScreen.style = 'display: none';
-        const gameBoard = document.querySelector('.game-board');
-        gameBoard.style = 'display: block';
-        game.playRound('multiplayer');
-    }, {once: true});
-
-}
