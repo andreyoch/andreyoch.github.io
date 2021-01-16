@@ -8,11 +8,13 @@ const board = (() => {
     function setBoard(boardArray) {
         _board = boardArray;
     }
+
     function clearBoardArray() {
         const _clearBoardArray = _board.map(array1 => array1.map(value => value = ''));
         setBoard(_clearBoardArray);
     }
-    return {getBoard,setBoard,clearBoardArray}
+
+    return {getBoard, setBoard, clearBoardArray}
 })()
 
 const game = (() => {
@@ -67,13 +69,14 @@ const game = (() => {
         }
         if (checkWinner(userSide)) {
             player1.updateScore();
-            endRound(name,'single-player');
+            endRound(name, 'single-player');
         } else if (_turnNumber === 9) {
             draw('single-player');
         } else {
             computerTurn(userSide);
         }
     }
+
     function makeTurnM(e) {
         _turnNumber++;
         const cell = e.target; //
@@ -105,20 +108,21 @@ const game = (() => {
         if (checkWinner(userSide)) {
             if (whoTurn === player1) {
                 player1.updateScore();
-                endRound(name,'multiplayer');
+                endRound(name, 'multiplayer');
             } else {
                 player2.updateScore();
-                endRound(name,'multiplayer');
+                endRound(name, 'multiplayer');
             }
         } else if (_turnNumber === 9) {
             draw('multiplayer');
         }
     }
+
     function playRound(typeOfGame) {
         updateGameResult();
         const cells = document.querySelectorAll('.cell');
         cells.forEach(cell => cell.style = 'background : ;');
-        if(typeOfGame === 'multiplayer') {
+        if (typeOfGame === 'multiplayer') {
             const whoseTurn = document.querySelector('.game-board_whose-turn');
             whoseTurn.textContent = `${player1.getName()} turn`;
             cells.forEach(cell => cell.addEventListener('click', makeTurnM))
@@ -127,6 +131,7 @@ const game = (() => {
         }
 
     }
+
     function whoseTurn() {
         const whoseTurnTitle = document.querySelector('.game-board_whose-turn');
         const whoseTurn = whoseTurnTitle.textContent;
@@ -152,6 +157,7 @@ const game = (() => {
             welcomeScreen.style = 'display: none';
         }, {once: true}))
     }
+
     function draw(typeOfGame) {
         const cells = document.querySelectorAll('.cell');
         const nextRoundBtn = document.querySelector('.next-round-btn_container');
@@ -176,6 +182,7 @@ const game = (() => {
             }
         }, {once: true});
     }
+
     function singlePlayer() {
         const enterNameScreen = document.querySelector('.single-player-name_enter');
         enterNameScreen.style = 'display: block';
@@ -205,6 +212,7 @@ const game = (() => {
             }, {once: true})
         })
     }
+
     function multiPlayer() {
         const enterNameScreen = document.querySelector('.single-player-name_enter');
         enterNameScreen.style = 'display: block';
@@ -227,6 +235,7 @@ const game = (() => {
             }, {once: true})
         }, {once: true});
     }
+
     function computerTurn(userSide) {
         _turnNumber++;
         const boardArray = board.getBoard();
@@ -262,10 +271,11 @@ const game = (() => {
         }
         if (checkWinner(computerSide)) {
             player2.updateScore();
-            endRound(player2.getName(),'single-player');
+            endRound(player2.getName(), 'single-player');
         }
 
     }
+
     function showPickASideScreenM() {
         const pickASideScreen = document.querySelector('.pick-a-side');
         pickASideScreen.style = 'display: block';
@@ -289,6 +299,7 @@ const game = (() => {
         }, {once: true});
 
     }
+
     function endGame() {
         let winner;
         if (player1.getScore() > player2.getScore()) {
@@ -314,6 +325,7 @@ const game = (() => {
             game.listenToTypeOfGame()
         }, {once: true});
     }
+
     function updateGameResult() {
         const gameResult = document.querySelector('.game-board_header');
         const player1Score = player1.getScore();
@@ -322,7 +334,8 @@ const game = (() => {
         const player2Name = player2.getName();
         gameResult.textContent = `${player1Name} ${player1Score} - ${player2Name} ${player2Score}`;
     }
-    function endRound(winner,typeOfGame) {
+
+    function endRound(winner, typeOfGame) {
         const cells = document.querySelectorAll('.cell');
         const nextRoundBtn = document.querySelector('.next-round-btn_container');
         const winnerText = document.querySelector('.game-board_whose-won-round');
@@ -336,7 +349,7 @@ const game = (() => {
             nextRoundBtn.style = 'display: none';
             winnerText.textContent = '';
             if (_round < 5) {
-                if(typeOfGame === 'multiplayer') {
+                if (typeOfGame === 'multiplayer') {
                     playRound('multiplayer');
                 } else {
                     playRound('single-player')
@@ -345,14 +358,16 @@ const game = (() => {
                 endGame();
             }
         }, {once: true});
-        if(typeOfGame === 'multiplayer') {
+        if (typeOfGame === 'multiplayer') {
             cells.forEach(cell => cell.removeEventListener('click', makeTurnM));
         } else {
             cells.forEach(cell => cell.removeEventListener('click', makeTurn));
         }
     }
+
     return {listenToTypeOfGame}
 })()
+
 function player() {
     let _name;
     let _side;
