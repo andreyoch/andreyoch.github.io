@@ -200,6 +200,57 @@ const game = (() => {
             }
         }, {once: true});
     }
+    function singlePlayer() {
+        const enterNameScreen = document.querySelector('.single-player-name_enter');
+        enterNameScreen.style = 'display: block';
+        const singlePlayerNextBtn = document.querySelector('.single-player_next-btn');
+        singlePlayerNextBtn.addEventListener('click', () => {
+            const playerName = document.querySelector('.name-input').value;
+            enterNameScreen.style = 'display: none';
+            const pickASideScreen = document.querySelector('.pick-a-side');
+            pickASideScreen.style = 'display: block';
+            const playBtn = document.querySelector('.pick-a-side_btn');
+            playBtn.addEventListener('click', () => {
+                let side;
+                //If cross selected return true,if ellipse return false
+                const selectedSide = document.querySelector('.buttons-row_button').checked;
+                if (selectedSide) {
+                    side = 'X';
+                } else {
+                    side = 'O';
+                }
+                pickASideScreen.style = 'display: none';
+                const gameBoard = document.querySelector('.game-board');
+                gameBoard.style = 'display: block';
+                player1.setName(playerName);
+                player1.setSide(side);
+                game.playRound('single-player');
+                updateGameResult()
+            }, {once: true})
+        })
+    }
+    function multiPlayer() {
+        const enterNameScreen = document.querySelector('.single-player-name_enter');
+        enterNameScreen.style = 'display: block';
+        const nameEnterHeader = document.querySelector('.single-player_header');
+        nameEnterHeader.textContent = 'Enter name for Player 1';
+        const nameSubmitBtn = document.querySelector('.single-player_next-btn');
+        const nameInput = document.querySelector('.name-input');
+        nameInput.value = 'Player 1';
+        //Wait for player1 name enter btn click,after that change nameInput placeholder and wait for player2 name enter btn click
+        nameSubmitBtn.addEventListener('click', () => {
+            const player1Name = nameInput.value;
+            player1.setName(player1Name);
+            nameEnterHeader.textContent = 'Enter name for Player 2';
+            nameInput.value = 'Player 2';
+            nameSubmitBtn.addEventListener('click', () => {
+                const player2Name = nameInput.value;
+                player2.setName(player2Name);
+                enterNameScreen.style = 'display: none';
+                showPickASideScreenM();
+            }, {once: true})
+        }, {once: true});
+    }
     return {
         checkWinner,
         makeTurn,
@@ -209,8 +260,10 @@ const game = (() => {
         getTurnNumber,
         updateTurnNumber,
         setTurnNumber,
-        playRound,listenToTypeOfGame,
-        draw
+        playRound,
+        listenToTypeOfGame,
+        draw,
+        makeTurnM
     };
 })()
 function player() {
@@ -260,58 +313,6 @@ function main() {
 
 
 
-function singlePlayer() {
-    const enterNameScreen = document.querySelector('.single-player-name_enter');
-    enterNameScreen.style = 'display: block';
-    const singlePlayerNextBtn = document.querySelector('.single-player_next-btn');
-    singlePlayerNextBtn.addEventListener('click', () => {
-        const playerName = document.querySelector('.name-input').value;
-        enterNameScreen.style = 'display: none';
-        const pickASideScreen = document.querySelector('.pick-a-side');
-        pickASideScreen.style = 'display: block';
-        const playBtn = document.querySelector('.pick-a-side_btn');
-        playBtn.addEventListener('click', () => {
-            let side;
-            //If cross selected return true,if ellipse return false
-            const selectedSide = document.querySelector('.buttons-row_button').checked;
-            if (selectedSide) {
-                side = 'X';
-            } else {
-                side = 'O';
-            }
-            pickASideScreen.style = 'display: none';
-            const gameBoard = document.querySelector('.game-board');
-            gameBoard.style = 'display: block';
-            player1.setName(playerName);
-            player1.setSide(side);
-            game.playRound('single-player');
-            updateGameResult()
-        }, {once: true})
-    })
-}
-
-function multiPlayer() {
-    const enterNameScreen = document.querySelector('.single-player-name_enter');
-    enterNameScreen.style = 'display: block';
-    const nameEnterHeader = document.querySelector('.single-player_header');
-    nameEnterHeader.textContent = 'Enter name for Player 1';
-    const nameSubmitBtn = document.querySelector('.single-player_next-btn');
-    const nameInput = document.querySelector('.name-input');
-    nameInput.value = 'Player 1';
-    //Wait for player1 name enter btn click,after that change nameInput placeholder and wait for player2 name enter btn click
-    nameSubmitBtn.addEventListener('click', () => {
-        const player1Name = nameInput.value;
-        player1.setName(player1Name);
-        nameEnterHeader.textContent = 'Enter name for Player 2';
-        nameInput.value = 'Player 2';
-        nameSubmitBtn.addEventListener('click', () => {
-            const player2Name = nameInput.value;
-            player2.setName(player2Name);
-            enterNameScreen.style = 'display: none';
-            showPickASideScreenM();
-        }, {once: true})
-    }, {once: true});
-}
 
 function computerTurn(userSide) {
     game.updateTurnNumber();
@@ -377,7 +378,7 @@ function endRound(winner,typeOfGame) {
         }
     }, {once: true});
     if(typeOfGame === 'multiplayer') {
-        cells.forEach(cell => cell.removeEventListener('click', makeTurnM));
+        cells.forEach(cell => cell.removeEventListener('click', game.makeTurnM));
     } else {
         cells.forEach(cell => cell.removeEventListener('click', game.makeTurn));
     }
@@ -414,7 +415,7 @@ function endGame() {
         document.location.reload()
         gameWinScreen.style = 'display: none';
         welcomeScreen.style = 'display" block';
-        listenToTypeOfGame()
+        game.listenToTypeOfGame()
     }, {once: true});
 }
 
