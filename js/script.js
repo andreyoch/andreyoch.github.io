@@ -1,7 +1,5 @@
-const game = (() => {
+const board = (() => {
     let _board = [['', '', ''], ['', '', ''], ['', '', '']];
-    let _round = 0;
-    let _turnNumber = 0;
 
     function getBoard() {
         return _board;
@@ -10,6 +8,16 @@ const game = (() => {
     function setBoard(boardArray) {
         _board = boardArray;
     }
+    function clearBoardArray() {
+        const _clearBoardArray = _board.map(array1 => array1.map(value => value = ''));
+        setBoard(_clearBoardArray);
+    }
+    return {getBoard,setBoard,clearBoardArray}
+})()
+
+const game = (() => {
+    let _round = 0;
+    let _turnNumber = 0;
 
     function getRoundNumber() {
         return _round;
@@ -23,13 +31,7 @@ const game = (() => {
         _round++;
     }
 
-    function clearBoardArray() {
-        const _clearBoardArray = _board.map(array1 => array1.map(value => value = ''));
-        setBoard(_clearBoardArray);
-    }
-
     function getTurnNumber() {
-        console.log(_turnNumber)
         return _turnNumber;
     }
 
@@ -42,29 +44,30 @@ const game = (() => {
     }
 
     function checkWinner(side) {
+        const boardArray = board.getBoard();
         //If first line equal
-        if (_board[0][0] === side && _board[0][1] === side && _board[0][2] === side) {
+        if (boardArray[0][0] === side && boardArray[0][1] === side && boardArray[0][2] === side) {
             return true;
             //If first column equal
-        } else if (_board[0][0] === side && _board[1][0] === side && _board[2][0] === side) {
+        } else if (boardArray[0][0] === side && boardArray[1][0] === side && boardArray[2][0] === side) {
             return true;
             //If second column equal
-        } else if (_board[0][1] === side && _board[1][1] === side && _board[2][1] === side) {
+        } else if (boardArray[0][1] === side && boardArray[1][1] === side && boardArray[2][1] === side) {
             return true;
             //If third column equal
-        } else if (_board[0][2] === side && _board[1][2] === side && _board[2][2] === side) {
+        } else if (boardArray[0][2] === side && boardArray[1][2] === side && boardArray[2][2] === side) {
             return true;
             //If second line equal
-        } else if (_board[1][0] === side && _board[1][1] === side && _board[1][2] === side) {
+        } else if (boardArray[1][0] === side && boardArray[1][1] === side && boardArray[1][2] === side) {
             return true;
             //If third line equal
-        } else if (_board[2][0] === side && _board[2][1] === side && _board[2][2] === side) {
+        } else if (boardArray[2][0] === side && boardArray[2][1] === side && boardArray[2][2] === side) {
             return true;
             //If equal from top to bottom
-        } else if (_board[0][0] === side && _board[1][1] === side && _board[2][2] === side) {
+        } else if (boardArray[0][0] === side && boardArray[1][1] === side && boardArray[2][2] === side) {
             return true;
             //If equal from bottom to top
-        } else if (_board[0][2] === side && _board[1][1] === side && _board[2][0] === side) {
+        } else if (boardArray[0][2] === side && boardArray[1][1] === side && boardArray[2][0] === side) {
             return true;
         }
     }
@@ -76,9 +79,9 @@ const game = (() => {
         const name = player1.getName();
         const lineNumber = parseInt(cell.parentElement.classList[1]) - 1;
         const cellNumber = parseInt(cell.classList[1]) - 1;
-        const board = game.getBoard();
-        board[lineNumber][cellNumber] = userSide;
-        game.setBoard(board);
+        const boardArray = board.getBoard();
+        boardArray[lineNumber][cellNumber] = userSide;
+        board.setBoard(boardArray);
         const userSelectedCell = document.querySelector(`#cell-${lineNumber}${cellNumber}`);
         cell.removeEventListener('click', game.makeTurn);
         if (userSide === 'X') {
@@ -96,10 +99,7 @@ const game = (() => {
         }
     }
     return {
-        getBoard,
         checkWinner,
-        setBoard,
-        clearBoardArray,
         makeTurn,
         getRoundNumber,
         updateRoundNumber,
@@ -108,10 +108,7 @@ const game = (() => {
         updateTurnNumber,
         setTurnNumber
     };
-
-
 })()
-
 function player() {
     let _name;
     let _side;
@@ -240,7 +237,7 @@ function multiPlayer() {
 
 function computerTurn(userSide) {
     game.updateTurnNumber();
-    const board = game.getBoard();
+    const boardArray = board.getBoard();
     let lineNumber;
     let cellNumber;
     let condition = true;
@@ -249,17 +246,17 @@ function computerTurn(userSide) {
         //Generate a random number for line and cell,and check,if cell not empty-repeat
         lineNumber = Math.floor((Math.random() * (3)));
         cellNumber = Math.floor((Math.random() * (3)));
-        if (!board[lineNumber][cellNumber]) {
+        if (!boardArray[lineNumber][cellNumber]) {
             //Update value in array
             if (userSide === 'X') {
                 computerSide = '0'
-                board[lineNumber][cellNumber] = computerSide;
+                boardArray[lineNumber][cellNumber] = computerSide;
             } else {
                 computerSide = 'X';
-                board[lineNumber][cellNumber] = computerSide;
+                boardArray[lineNumber][cellNumber] = computerSide;
             }
             condition = false;
-            game.setBoard(board);
+            board.setBoard(boardArray);
         }
     }
 
@@ -284,7 +281,7 @@ function endRound(winner,typeOfGame) {
     const winnerText = document.querySelector('.game-board_whose-won-round');
     nextRoundBtn.style = 'display: block';
     winnerText.textContent = `${winner} win the round!`
-    game.clearBoardArray();
+    board.clearBoardArray();
     updateGameResult();
     game.updateRoundNumber();
     game.setTurnNumber(0);
@@ -384,9 +381,9 @@ function makeTurnM(e) {
     cell.removeEventListener('click', makeTurnM);
     const lineNumber = parseInt(cell.parentElement.classList[1]) - 1;
     const cellNumber = parseInt(cell.classList[1]) - 1;
-    const board = game.getBoard();
-    board[lineNumber][cellNumber] = userSide;
-    game.setBoard(board);
+    const boardArray = board.getBoard();
+    boardArray[lineNumber][cellNumber] = userSide;
+    board.setBoard(boardArray);
     const userSelectedCell = document.querySelector(`#cell-${lineNumber}${cellNumber}`);
     cell.removeEventListener('click', game.makeTurn);
     if (userSide === 'X') {
@@ -425,7 +422,7 @@ function draw(typeOfGame) {
     const winnerText = document.querySelector('.game-board_whose-won-round');
     winnerText.textContent = 'Draw!';
     nextRoundBtn.style = 'display: block';
-    game.clearBoardArray();
+    board.clearBoardArray();
     game.updateRoundNumber();
     game.setTurnNumber(0);
     if (typeOfGame === 'multiplayer') {
