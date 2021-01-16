@@ -281,7 +281,6 @@ function endRound(winner) {
     nextRoundBtn.style = 'display: block';
     winnerText.textContent = `${winner} win the round!`
     game.clearBoardArray();
-    updateGameResult();
     game.updateRoundNumber();
     game.setTurnNumber(0);
     cells.forEach(cell => cell.removeEventListener('click', game.makeTurn));
@@ -450,7 +449,6 @@ function draw(typeOfGame) {
     winnerText.textContent = 'Draw!';
     nextRoundBtn.style = 'display: block';
     game.clearBoardArray();
-    updateGameResult();
     game.updateRoundNumber();
     game.setTurnNumber(0);
     if (typeOfGame === 'multiplayer') {
