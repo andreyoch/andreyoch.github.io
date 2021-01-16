@@ -19,18 +19,6 @@ const game = (() => {
     let _round = 0;
     let _turnNumber = 0;
 
-    function getRoundNumber() {
-        return _round;
-    }
-
-    function setRoundNumber(numberOfRounds) {
-        _round = numberOfRounds;
-    }
-
-    function updateRoundNumber() {
-        _round++;
-    }
-
     function getTurnNumber() {
         return _turnNumber;
     }
@@ -183,7 +171,7 @@ const game = (() => {
         winnerText.textContent = 'Draw!';
         nextRoundBtn.style = 'display: block';
         board.clearBoardArray();
-        game.updateRoundNumber();
+        _round++;
         game.setTurnNumber(0);
         if (typeOfGame === 'multiplayer') {
             cells.forEach(cell => cell.removeEventListener('click', makeTurnM));
@@ -322,7 +310,7 @@ const game = (() => {
         }
         player1.setScore(0);
         player2.setScore(0);
-        game.setRoundNumber(0);
+        _round = 0;
         const gameBoardScreen = document.querySelector('.game-board');
         const gameWinScreen = document.querySelector('.game-win');
         const winnerTitle = document.querySelector('.game-win_header');
@@ -354,12 +342,12 @@ const game = (() => {
         winnerText.textContent = `${winner} win the round!`
         board.clearBoardArray();
         updateGameResult();
-        game.updateRoundNumber();
+        _round++;
         game.setTurnNumber(0);
         nextRoundBtn.addEventListener('click', () => {
             nextRoundBtn.style = 'display: none';
             winnerText.textContent = '';
-            if (getRoundNumber() < 5) {
+            if (_round < 5) {
                 if(typeOfGame === 'multiplayer') {
                     game.playRound('multiplayer');
                 } else {
@@ -376,8 +364,6 @@ const game = (() => {
         }
     }
     return {
-        updateRoundNumber,
-        setRoundNumber,
         getTurnNumber,
         updateTurnNumber,
         setTurnNumber,
