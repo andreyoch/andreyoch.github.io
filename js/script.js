@@ -251,6 +251,45 @@ const game = (() => {
             }, {once: true})
         }, {once: true});
     }
+    function computerTurn(userSide) {
+        game.updateTurnNumber();
+        const boardArray = board.getBoard();
+        let lineNumber;
+        let cellNumber;
+        let condition = true;
+        let computerSide;
+        while (condition) {
+            //Generate a random number for line and cell,and check,if cell not empty-repeat
+            lineNumber = Math.floor((Math.random() * (3)));
+            cellNumber = Math.floor((Math.random() * (3)));
+            if (!boardArray[lineNumber][cellNumber]) {
+                //Update value in array
+                if (userSide === 'X') {
+                    computerSide = '0'
+                    boardArray[lineNumber][cellNumber] = computerSide;
+                } else {
+                    computerSide = 'X';
+                    boardArray[lineNumber][cellNumber] = computerSide;
+                }
+                condition = false;
+                board.setBoard(boardArray);
+            }
+        }
+
+        const computerSelectedCell = document.querySelector(`#cell-${lineNumber}${cellNumber}`);
+        computerSelectedCell.removeEventListener('click', game.makeTurn);
+        if (userSide === 'X') {
+            computerSelectedCell.style = 'background: url("../images/ellipse.png") no-repeat center';
+
+        } else {
+            computerSelectedCell.style = 'background: url("../images/cross.png") no-repeat center';
+        }
+        if (game.checkWinner(computerSide)) {
+            player2.updateScore();
+            endRound(player2.getName(),'single-player');
+        }
+
+    }
     return {
         checkWinner,
         makeTurn,
@@ -311,48 +350,6 @@ function main() {
     game.listenToTypeOfGame()
 }
 
-
-
-
-function computerTurn(userSide) {
-    game.updateTurnNumber();
-    const boardArray = board.getBoard();
-    let lineNumber;
-    let cellNumber;
-    let condition = true;
-    let computerSide;
-    while (condition) {
-        //Generate a random number for line and cell,and check,if cell not empty-repeat
-        lineNumber = Math.floor((Math.random() * (3)));
-        cellNumber = Math.floor((Math.random() * (3)));
-        if (!boardArray[lineNumber][cellNumber]) {
-            //Update value in array
-            if (userSide === 'X') {
-                computerSide = '0'
-                boardArray[lineNumber][cellNumber] = computerSide;
-            } else {
-                computerSide = 'X';
-                boardArray[lineNumber][cellNumber] = computerSide;
-            }
-            condition = false;
-            board.setBoard(boardArray);
-        }
-    }
-
-    const computerSelectedCell = document.querySelector(`#cell-${lineNumber}${cellNumber}`);
-    computerSelectedCell.removeEventListener('click', game.makeTurn);
-    if (userSide === 'X') {
-        computerSelectedCell.style = 'background: url("../images/ellipse.png") no-repeat center';
-
-    } else {
-        computerSelectedCell.style = 'background: url("../images/cross.png") no-repeat center';
-    }
-    if (game.checkWinner(computerSide)) {
-        player2.updateScore();
-        endRound(player2.getName(),'single-player');
-    }
-
-}
 
 function endRound(winner,typeOfGame) {
     const cells = document.querySelectorAll('.cell');
