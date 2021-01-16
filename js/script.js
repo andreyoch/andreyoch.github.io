@@ -90,7 +90,7 @@ const game = (() => {
             player1.updateScore();
             endRound(name,'single-player');
         } else if (game.getTurnNumber() === 9) {
-            draw('singleplayer');
+            draw('single-player');
         } else {
             computerTurn(userSide);
         }
@@ -183,7 +183,6 @@ function listenToTypeOfGame() {
         const welcomeScreen = document.querySelector('.welcome-screen');
         welcomeScreen.style = 'display: none';
     }, {once: true}))
-
 }
 
 function singlePlayer() {
@@ -351,7 +350,6 @@ function showPickASideScreenM() {
     pickASideHeader.textContent = `${player1.getName()} pick a side`;
     const playBtn = document.querySelector('.pick-a-side_btn');
     playBtn.addEventListener('click', () => {
-        let side;
         //If cross selected return true,if ellipse return false
         const selectedSide = document.querySelector('.buttons-row_button').checked;
         if (selectedSide) {
@@ -441,7 +439,7 @@ function draw(typeOfGame) {
         if (typeOfGame === 'multiplayer') {
             playRound('multiplayer');
         } else {
-            playRound();
+            playRound('single-player');
         }
     }, {once: true});
 }
