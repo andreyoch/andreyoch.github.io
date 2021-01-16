@@ -63,9 +63,9 @@ const game = (() => {
         const userSelectedCell = document.querySelector(`#cell-${lineNumber}${cellNumber}`);
         cell.removeEventListener('click', makeTurn);
         if (userSide === 'X') {
-            userSelectedCell.style = 'background: url("../images/cross.png") no-repeat center';
+            userSelectedCell.classList.add('cross');
         } else {
-            userSelectedCell.style = 'background: url("../images/ellipse.png") no-repeat center';
+            userSelectedCell.classList.add('ellipse');
         }
         if (checkWinner(userSide)) {
             player1.updateScore();
@@ -101,9 +101,9 @@ const game = (() => {
         const userSelectedCell = document.querySelector(`#cell-${lineNumber}${cellNumber}`);
         cell.removeEventListener('click', makeTurn);
         if (userSide === 'X') {
-            userSelectedCell.style = 'background: url("../images/cross.png") no-repeat center';
+            userSelectedCell.classList.add('cross');
         } else {
-            userSelectedCell.style = 'background: url("../images/ellipse.png") no-repeat center';
+            userSelectedCell.classList.add('ellipse');
         }
         if (checkWinner(userSide)) {
             if (whoTurn === player1) {
@@ -264,10 +264,12 @@ const game = (() => {
         const computerSelectedCell = document.querySelector(`#cell-${lineNumber}${cellNumber}`);
         computerSelectedCell.removeEventListener('click', makeTurn);
         if (userSide === 'X') {
-            computerSelectedCell.style = 'background: url("../images/ellipse.png") no-repeat center';
+            computerSelectedCell.classList.add('ellipse');
+
 
         } else {
-            computerSelectedCell.style = 'background: url("../images/cross.png") no-repeat center';
+            computerSelectedCell.classList.add('cross');
+
         }
         if (checkWinner(computerSide)) {
             player2.updateScore();

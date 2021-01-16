@@ -225,7 +225,7 @@ html {
 }
 
 .game-board {
-display: none;
+    display: none;
 }
 
 .line {
@@ -242,17 +242,18 @@ display: none;
     align-items: center;
     font-size: 50px;
 }
-#cell-00,#cell-01,#cell-10,#cell-11,#cell-20,#cell-21 {
+
+#cell-00, #cell-01, #cell-10, #cell-11, #cell-20, #cell-21 {
     border-right: 10px solid var(--main-color);
 }
 
-#cell-00,#cell-01,#cell-02,#cell-10,#cell-11,#cell-12{
-    border-bottom:10px solid var(--main-color) ;
+#cell-00, #cell-01, #cell-02, #cell-10, #cell-11, #cell-12 {
+    border-bottom: 10px solid var(--main-color);
 }
 
 .game-board_whose-won-round {
     color: var(--main-color);
-    font-family: Poppins,sans-serif;
+    font-family: Poppins, sans-serif;
     font-size: 70px;
     font-weight: 700;
     text-align: center;
@@ -269,26 +270,37 @@ display: none;
     width: 236px;
     height: 56px;
     color: #ffffff;
-    font-family: Poppins,sans-serif;
+    font-family: Poppins, sans-serif;
     font-size: 32px;
     font-weight: 700;
     text-align: center;
     text-transform: uppercase;
 }
 
+.ellipse {
+    background: url("../images/ellipse.png") no-repeat center;
+    background-size: 120px 120px;
+}
+
+.cross {
+    background: url("../images/cross.png") no-repeat center;
+    background-size: 120px 120px;
+}
+
 /* Media queries for game board screen*/
-@media(max-width: 432px) {
-    .cell {
-        background-size: 80px;
+@media (max-width: 432px) {
+    .ellipse, .cross {
+        background-size: 80px 80px;
     }
 }
 
-@media(max-width: 320px) {
+@media (max-width: 320px) {
     .game-board_whose-turn {
         font-size: 60px;
     }
-    .cell {
-        background-size: 70px;
+
+    .ellipse, .cross {
+        background-size: 70px 70px;
     }
 }
 
@@ -296,18 +308,22 @@ display: none;
 .game-win {
     display: none;
 }
+
 .game-win_header {
     margin-top: 360px;
 }
+
 .game-win_btn-container {
     text-align: center;
 }
+
 #new-game-btn {
     margin-top: 64px;
     font-size: 60px;
 }
+
 /* Media queries for game win screen */
-@media(max-width: 433px) {
+@media (max-width: 433px) {
     #new-game-btn {
         width: 250px;
         font-size: 40px;
