@@ -98,6 +98,19 @@ const game = (() => {
             computerTurn(userSide);
         }
     }
+    function playRound(typeOfGame) {
+        updateGameResult();
+        const cells = document.querySelectorAll('.cell');
+        cells.forEach(cell => cell.style = 'background : ;');
+        if(typeOfGame === 'multiplayer') {
+            const whoseTurn = document.querySelector('.game-board_whose-turn');
+            whoseTurn.textContent = `${player1.getName()} turn`;
+            cells.forEach(cell => cell.addEventListener('click', makeTurnM))
+        } else {
+            cells.forEach(cell => cell.addEventListener('click', game.makeTurn));
+        }
+
+    }
     return {
         checkWinner,
         makeTurn,
@@ -106,7 +119,8 @@ const game = (() => {
         setRoundNumber,
         getTurnNumber,
         updateTurnNumber,
-        setTurnNumber
+        setTurnNumber,
+        playRound
     };
 })()
 function player() {
@@ -154,20 +168,6 @@ function main() {
     listenToTypeOfGame()
 }
 
-function playRound(typeOfGame) {
-    updateGameResult();
-    const cells = document.querySelectorAll('.cell');
-    cells.forEach(cell => cell.style = 'background : ;');
-    if(typeOfGame === 'multiplayer') {
-        const whoseTurn = document.querySelector('.game-board_whose-turn');
-        whoseTurn.textContent = `${player1.getName()} turn`;
-        cells.forEach(cell => cell.addEventListener('click', makeTurnM))
-    } else {
-        cells.forEach(cell => cell.addEventListener('click', game.makeTurn));
-    }
-
-}
-
 function listenToTypeOfGame() {
     const gameTypeButtons = document.querySelectorAll('.button-row_button');
     gameTypeButtons.forEach(btn => btn.addEventListener('click', () => {
@@ -206,7 +206,7 @@ function singlePlayer() {
             gameBoard.style = 'display: block';
             player1.setName(playerName);
             player1.setSide(side);
-            playRound('single-player');
+            game.playRound('single-player');
             updateGameResult()
         }, {once: true})
     })
@@ -290,9 +290,9 @@ function endRound(winner,typeOfGame) {
         winnerText.textContent = '';
         if (game.getRoundNumber() < 5) {
             if(typeOfGame === 'multiplayer') {
-                playRound('multiplayer');
+                game.playRound('multiplayer');
             } else {
-                playRound('single-player')
+                game.playRound('single-player')
             }
         } else {
             endGame();
@@ -359,7 +359,7 @@ function showPickASideScreenM() {
         pickASideScreen.style = 'display: none';
         const gameBoard = document.querySelector('.game-board');
         gameBoard.style = 'display: block';
-        playRound('multiplayer');
+        game.playRound('multiplayer');
     }, {once: true});
 
 }
@@ -434,9 +434,9 @@ function draw(typeOfGame) {
         winnerText.textContent = '';
         nextRoundBtn.style = 'display: none';
         if (typeOfGame === 'multiplayer') {
-            playRound('multiplayer');
+            game.playRound('multiplayer');
         } else {
-            playRound('single-player');
+            game.playRound('single-player');
         }
     }, {once: true});
 }
