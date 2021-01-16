@@ -124,6 +124,30 @@ const game = (() => {
             welcomeScreen.style = 'display: none';
         }, {once: true}))
     }
+    function draw(typeOfGame) {
+        const cells = document.querySelectorAll('.cell');
+        const nextRoundBtn = document.querySelector('.next-round-btn_container');
+        const winnerText = document.querySelector('.game-board_whose-won-round');
+        winnerText.textContent = 'Draw!';
+        nextRoundBtn.style = 'display: block';
+        board.clearBoardArray();
+        game.updateRoundNumber();
+        game.setTurnNumber(0);
+        if (typeOfGame === 'multiplayer') {
+            cells.forEach(cell => cell.removeEventListener('click', makeTurnM));
+        } else {
+            cells.forEach(cell => cell.removeEventListener('click', game.makeTurn));
+        }
+        nextRoundBtn.addEventListener('click', () => {
+            winnerText.textContent = '';
+            nextRoundBtn.style = 'display: none';
+            if (typeOfGame === 'multiplayer') {
+                playRound('multiplayer');
+            } else {
+                playRound('single-player');
+            }
+        }, {once: true});
+    }
     return {
         checkWinner,
         makeTurn,
@@ -133,7 +157,8 @@ const game = (() => {
         getTurnNumber,
         updateTurnNumber,
         setTurnNumber,
-        playRound,listenToTypeOfGame
+        playRound,listenToTypeOfGame,
+        draw
     };
 })()
 function player() {
@@ -401,7 +426,7 @@ function makeTurnM(e) {
             endRound(name,'multiplayer');
         }
     } else if (game.getTurnNumber() === 9) {
-        draw('multiplayer');
+        game.draw('multiplayer');
     }
 }
 
@@ -415,29 +440,4 @@ function whoseTurn() {
         whoseTurnTitle.textContent = `${player1.getName()} turn`
         return 'playerTwo';
     }
-}
-
-function draw(typeOfGame) {
-    const cells = document.querySelectorAll('.cell');
-    const nextRoundBtn = document.querySelector('.next-round-btn_container');
-    const winnerText = document.querySelector('.game-board_whose-won-round');
-    winnerText.textContent = 'Draw!';
-    nextRoundBtn.style = 'display: block';
-    board.clearBoardArray();
-    game.updateRoundNumber();
-    game.setTurnNumber(0);
-    if (typeOfGame === 'multiplayer') {
-        cells.forEach(cell => cell.removeEventListener('click', makeTurnM));
-    } else {
-        cells.forEach(cell => cell.removeEventListener('click', game.makeTurn));
-    }
-    nextRoundBtn.addEventListener('click', () => {
-        winnerText.textContent = '';
-        nextRoundBtn.style = 'display: none';
-        if (typeOfGame === 'multiplayer') {
-            game.playRound('multiplayer');
-        } else {
-            game.playRound('single-player');
-        }
-    }, {once: true});
 }
