@@ -83,13 +83,13 @@ const game = (() => {
         boardArray[lineNumber][cellNumber] = userSide;
         board.setBoard(boardArray);
         const userSelectedCell = document.querySelector(`#cell-${lineNumber}${cellNumber}`);
-        cell.removeEventListener('click', game.makeTurn);
+        cell.removeEventListener('click', makeTurn);
         if (userSide === 'X') {
             userSelectedCell.style = 'background: url("../images/cross.png") no-repeat center';
         } else {
             userSelectedCell.style = 'background: url("../images/ellipse.png") no-repeat center';
         }
-        if (game.checkWinner(userSide)) {
+        if (checkWinner(userSide)) {
             player1.updateScore();
             endRound(name,'single-player');
         } else if (game.getTurnNumber() === 9) {
@@ -120,13 +120,13 @@ const game = (() => {
         boardArray[lineNumber][cellNumber] = userSide;
         board.setBoard(boardArray);
         const userSelectedCell = document.querySelector(`#cell-${lineNumber}${cellNumber}`);
-        cell.removeEventListener('click', game.makeTurn);
+        cell.removeEventListener('click', makeTurn);
         if (userSide === 'X') {
             userSelectedCell.style = 'background: url("../images/cross.png") no-repeat center';
         } else {
             userSelectedCell.style = 'background: url("../images/ellipse.png") no-repeat center';
         }
-        if (game.checkWinner(userSide)) {
+        if (checkWinner(userSide)) {
             if (whoTurn === player1) {
                 player1.updateScore();
                 endRound(name,'multiplayer');
@@ -147,7 +147,7 @@ const game = (() => {
             whoseTurn.textContent = `${player1.getName()} turn`;
             cells.forEach(cell => cell.addEventListener('click', makeTurnM))
         } else {
-            cells.forEach(cell => cell.addEventListener('click', game.makeTurn));
+            cells.forEach(cell => cell.addEventListener('click', makeTurn));
         }
 
     }
@@ -188,7 +188,7 @@ const game = (() => {
         if (typeOfGame === 'multiplayer') {
             cells.forEach(cell => cell.removeEventListener('click', makeTurnM));
         } else {
-            cells.forEach(cell => cell.removeEventListener('click', game.makeTurn));
+            cells.forEach(cell => cell.removeEventListener('click', makeTurn));
         }
         nextRoundBtn.addEventListener('click', () => {
             winnerText.textContent = '';
@@ -277,14 +277,14 @@ const game = (() => {
         }
 
         const computerSelectedCell = document.querySelector(`#cell-${lineNumber}${cellNumber}`);
-        computerSelectedCell.removeEventListener('click', game.makeTurn);
+        computerSelectedCell.removeEventListener('click', makeTurn);
         if (userSide === 'X') {
             computerSelectedCell.style = 'background: url("../images/ellipse.png") no-repeat center';
 
         } else {
             computerSelectedCell.style = 'background: url("../images/cross.png") no-repeat center';
         }
-        if (game.checkWinner(computerSide)) {
+        if (checkWinner(computerSide)) {
             player2.updateScore();
             endRound(player2.getName(),'single-player');
         }
@@ -359,7 +359,7 @@ const game = (() => {
         nextRoundBtn.addEventListener('click', () => {
             nextRoundBtn.style = 'display: none';
             winnerText.textContent = '';
-            if (game.getRoundNumber() < 5) {
+            if (getRoundNumber() < 5) {
                 if(typeOfGame === 'multiplayer') {
                     game.playRound('multiplayer');
                 } else {
@@ -372,13 +372,10 @@ const game = (() => {
         if(typeOfGame === 'multiplayer') {
             cells.forEach(cell => cell.removeEventListener('click', game.makeTurnM));
         } else {
-            cells.forEach(cell => cell.removeEventListener('click', game.makeTurn));
+            cells.forEach(cell => cell.removeEventListener('click', makeTurn));
         }
     }
     return {
-        checkWinner,
-        makeTurn,
-        getRoundNumber,
         updateRoundNumber,
         setRoundNumber,
         getTurnNumber,
