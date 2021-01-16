@@ -159,11 +159,18 @@ function main() {
     listenToTypeOfGame()
 }
 
-function playRound() {
+function playRound(typeOfGame) {
     updateGameResult();
     const cells = document.querySelectorAll('.cell');
     cells.forEach(cell => cell.style = 'background : ;');
-    cells.forEach(cell => cell.addEventListener('click', game.makeTurn));
+    if(typeOfGame === 'multiplayer') {
+        const whoseTurn = document.querySelector('.game-board_whose-turn');
+        whoseTurn.textContent = `${player1.getName()} turn`;
+        cells.forEach(cell => cell.addEventListener('click', makeTurnM))
+    } else {
+        cells.forEach(cell => cell.addEventListener('click', game.makeTurn));
+    }
+
 }
 
 function listenToTypeOfGame() {
@@ -205,7 +212,7 @@ function singlePlayer() {
             gameBoard.style = 'display: block';
             player1.setName(playerName);
             player1.setSide(side);
-            playRound(side, playerName);
+            playRound('single-player');
             updateGameResult()
         }, {once: true})
     })
@@ -289,7 +296,7 @@ function endRound(winner) {
         winnerText.textContent = '';
         if (game.getRoundNumber() < 5) {
             console.log(game.getRoundNumber())
-            playRound();
+            playRound('single-player');
         } else {
             endGame(winner);
         }
@@ -351,21 +358,10 @@ function showPickASideScreenM() {
         pickASideScreen.style = 'display: none';
         const gameBoard = document.querySelector('.game-board');
         gameBoard.style = 'display: block';
-        playRoundM();
+        playRound('multiplayer');
     }, {once: true});
 
 }
-
-function playRoundM() {
-    updateGameResult();
-    //Player One turn
-    const whoseTurn = document.querySelector('.game-board_whose-turn');
-    whoseTurn.textContent = `${player1.getName()} turn`;
-    const cells = document.querySelectorAll('.cell');
-    cells.forEach(cell => cell.style = 'background : ;');
-    cells.forEach(cell => cell.addEventListener('click', makeTurnM))
-}
-
 function makeTurnM(e) {
     game.updateTurnNumber();
     const cell = e.target; //
@@ -435,7 +431,7 @@ function endRoundM(winner) {
         winnerText.textContent = '';
         if (game.getRoundNumber() < 5) {
             console.log(game.getRoundNumber())
-            playRoundM();
+            playRound('multiplayer');
         } else {
             endGame();
         }
@@ -460,7 +456,7 @@ function draw(typeOfGame) {
         winnerText.textContent = '';
         nextRoundBtn.style = 'display: none';
         if (typeOfGame === 'multiplayer') {
-            playRoundM();
+            playRound('multiplayer');
         } else {
             playRound();
         }
