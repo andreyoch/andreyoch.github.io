@@ -395,7 +395,7 @@ function endRoundM(winner) {
     game.clearBoardArray();
     updateGameResult();
     game.updateRoundNumber();
-    cells.forEach(cell => cell.removeEventListener('click', game.makeTurn));
+    cells.forEach(cell => cell.removeEventListener('click', makeTurnM));
     nextRoundBtn.addEventListener('click', () => {
         nextRoundBtn.style = 'display: none';
         winnerText.textContent = '';
