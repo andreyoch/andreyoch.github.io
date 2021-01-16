@@ -111,7 +111,7 @@ const game = (() => {
                 endRound(name,'multiplayer');
             }
         } else if (_turnNumber === 9) {
-            game.draw('multiplayer');
+            draw('multiplayer');
         }
     }
     function playRound(typeOfGame) {
@@ -200,7 +200,7 @@ const game = (() => {
                 gameBoard.style = 'display: block';
                 player1.setName(playerName);
                 player1.setSide(side);
-                game.playRound('single-player');
+                playRound('single-player');
                 updateGameResult()
             }, {once: true})
         })
@@ -285,7 +285,7 @@ const game = (() => {
             pickASideScreen.style = 'display: none';
             const gameBoard = document.querySelector('.game-board');
             gameBoard.style = 'display: block';
-            game.playRound('multiplayer');
+            playRound('multiplayer');
         }, {once: true});
 
     }
@@ -337,26 +337,21 @@ const game = (() => {
             winnerText.textContent = '';
             if (_round < 5) {
                 if(typeOfGame === 'multiplayer') {
-                    game.playRound('multiplayer');
+                    playRound('multiplayer');
                 } else {
-                    game.playRound('single-player')
+                    playRound('single-player')
                 }
             } else {
                 endGame();
             }
         }, {once: true});
         if(typeOfGame === 'multiplayer') {
-            cells.forEach(cell => cell.removeEventListener('click', game.makeTurnM));
+            cells.forEach(cell => cell.removeEventListener('click', makeTurnM));
         } else {
             cells.forEach(cell => cell.removeEventListener('click', makeTurn));
         }
     }
-    return {
-        playRound,
-        listenToTypeOfGame,
-        draw,
-        makeTurnM
-    };
+    return {listenToTypeOfGame}
 })()
 function player() {
     let _name;
