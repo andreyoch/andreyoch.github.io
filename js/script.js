@@ -121,7 +121,12 @@ const game = (() => {
     function playRound(typeOfGame) {
         updateGameResult();
         const cells = document.querySelectorAll('.cell');
-        cells.forEach(cell => cell.style = 'background : ;');
+        cells.forEach(cell => {
+            cell.classList.remove('cross')
+            cell.classList.remove('ellipse')
+        });
+
+
         if (typeOfGame === 'multiplayer') {
             const whoseTurn = document.querySelector('.game-board_whose-turn');
             whoseTurn.textContent = `${player1.getName()} turn`;
