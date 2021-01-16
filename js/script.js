@@ -98,6 +98,46 @@ const game = (() => {
             computerTurn(userSide);
         }
     }
+    function makeTurnM(e) {
+        game.updateTurnNumber();
+        const cell = e.target; //
+        let userSide;
+        let name;
+        let whoTurn;
+        if (whoseTurn() === 'playerOne') {
+            whoTurn = player1;
+            userSide = player1.getSide();
+            name = player1.getName();
+        } else {
+            whoTurn = player2;
+            userSide = player2.getSide();
+            name = player2.getName()
+        }
+        cell.removeEventListener('click', makeTurnM);
+        const lineNumber = parseInt(cell.parentElement.classList[1]) - 1;
+        const cellNumber = parseInt(cell.classList[1]) - 1;
+        const boardArray = board.getBoard();
+        boardArray[lineNumber][cellNumber] = userSide;
+        board.setBoard(boardArray);
+        const userSelectedCell = document.querySelector(`#cell-${lineNumber}${cellNumber}`);
+        cell.removeEventListener('click', game.makeTurn);
+        if (userSide === 'X') {
+            userSelectedCell.style = 'background: url("../images/cross.png") no-repeat center';
+        } else {
+            userSelectedCell.style = 'background: url("../images/ellipse.png") no-repeat center';
+        }
+        if (game.checkWinner(userSide)) {
+            if (whoTurn === player1) {
+                player1.updateScore();
+                endRound(name,'multiplayer');
+            } else {
+                player2.updateScore();
+                endRound(name,'multiplayer');
+            }
+        } else if (game.getTurnNumber() === 9) {
+            game.draw('multiplayer');
+        }
+    }
     function playRound(typeOfGame) {
         updateGameResult();
         const cells = document.querySelectorAll('.cell');
@@ -111,6 +151,18 @@ const game = (() => {
         }
 
     }
+    function whoseTurn() {
+        const whoseTurnTitle = document.querySelector('.game-board_whose-turn');
+        const whoseTurn = whoseTurnTitle.textContent;
+        if (whoseTurn.includes(`${player1.getName()}`)) {
+            whoseTurnTitle.textContent = `${player2.getName()} turn`
+            return 'playerOne';
+        } else {
+            whoseTurnTitle.textContent = `${player1.getName()} turn`
+            return 'playerTwo';
+        }
+    }
+
     function listenToTypeOfGame() {
         const gameTypeButtons = document.querySelectorAll('.button-row_button');
         gameTypeButtons.forEach(btn => btn.addEventListener('click', () => {
@@ -388,56 +440,4 @@ function showPickASideScreenM() {
         game.playRound('multiplayer');
     }, {once: true});
 
-}
-function makeTurnM(e) {
-    game.updateTurnNumber();
-    const cell = e.target; //
-    let userSide;
-    let name;
-    let whoTurn;
-    if (whoseTurn() === 'playerOne') {
-        whoTurn = player1;
-        userSide = player1.getSide();
-        name = player1.getName();
-    } else {
-        whoTurn = player2;
-        userSide = player2.getSide();
-        name = player2.getName()
-    }
-    cell.removeEventListener('click', makeTurnM);
-    const lineNumber = parseInt(cell.parentElement.classList[1]) - 1;
-    const cellNumber = parseInt(cell.classList[1]) - 1;
-    const boardArray = board.getBoard();
-    boardArray[lineNumber][cellNumber] = userSide;
-    board.setBoard(boardArray);
-    const userSelectedCell = document.querySelector(`#cell-${lineNumber}${cellNumber}`);
-    cell.removeEventListener('click', game.makeTurn);
-    if (userSide === 'X') {
-        userSelectedCell.style = 'background: url("../images/cross.png") no-repeat center';
-    } else {
-        userSelectedCell.style = 'background: url("../images/ellipse.png") no-repeat center';
-    }
-    if (game.checkWinner(userSide)) {
-        if (whoTurn === player1) {
-            player1.updateScore();
-            endRound(name,'multiplayer');
-        } else {
-            player2.updateScore();
-            endRound(name,'multiplayer');
-        }
-    } else if (game.getTurnNumber() === 9) {
-        game.draw('multiplayer');
-    }
-}
-
-function whoseTurn() {
-    const whoseTurnTitle = document.querySelector('.game-board_whose-turn');
-    const whoseTurn = whoseTurnTitle.textContent;
-    if (whoseTurn.includes(`${player1.getName()}`)) {
-        whoseTurnTitle.textContent = `${player2.getName()} turn`
-        return 'playerOne';
-    } else {
-        whoseTurnTitle.textContent = `${player1.getName()} turn`
-        return 'playerTwo';
-    }
 }
